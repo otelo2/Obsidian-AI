@@ -29,19 +29,7 @@ export default class ObsidianAI extends Plugin {
 		const statusBarItemEl = this.addStatusBarItem();
 		statusBarItemEl.setText('Status Bar Text');
 
-		// This adds a simple command that can be triggered anywhere
-		this.addCommand({
-			id: 'make-post-request',
-			name: 'Make a POST request to the API',
-			editorCallback: async (editor: Editor, view: MarkdownView) => {
-				let cgpt:ChatGPT
-				cgpt = new ChatGPT();
-				let response = cgpt.makePostRequest("http://localhost:8080/api/ask");
-				console.log(editor.getSelection());
-				editor.replaceSelection(await response);
-			}
-		});
-		// This adds a simple command that can be triggered anywhere
+		// Adds more text to an existing document
 		this.addCommand({
 			id: 'help-me-write',
 			name: 'Help me write (write more content to the document - reads all the text in the document)',
@@ -56,7 +44,7 @@ export default class ObsidianAI extends Plugin {
 				}
 			}
 		});
-		// This adds a simple command that can be triggered anywhere
+		// Just sends the text of the document to the AI
 		this.addCommand({
 			id: 'ask-question',
 			name: 'Ask a question (sends the document text to the AI)',
@@ -71,6 +59,7 @@ export default class ObsidianAI extends Plugin {
 				}
 			}
 		});
+		// Adds 10 ideas to the document
 		this.addCommand({
 			id: 'brainstorm-ideas',
 			name: 'Brainstorm Ideas (10 ideas based on the topic - reads all the text in the document)',
