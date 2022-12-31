@@ -71,6 +71,21 @@ export default class ObsidianAI extends Plugin {
 				}
 			}
 		});
+		this.addCommand({
+			id: 'brainstorm-ideas',
+			name: 'Brainstorm Ideas (10 ideas based on the topic - reads all the text in the document)',
+			editorCallback: async (editor: Editor, view: MarkdownView) => {
+				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+				if (activeView) { 
+					let obsidianAPI = new ChatGPT();
+					let fileContents = this.app.vault.cachedRead(activeView.file);
+					// Call the corresponding prompt
+					let response = obsidianAPI.brainstormIdeas(await fileContents);
+					console.log(editor.getSelection());
+					editor.replaceSelection(await response || "");
+				}
+			}
+		});
 		// This adds a simple command that can be triggered anywhere
 		this.addCommand({
 			id: 'open-sample-modal-simple',
