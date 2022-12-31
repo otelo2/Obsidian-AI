@@ -1,96 +1,39 @@
-# Obsidian Sample Plugin
+# Obsidian AI
+## A shameless rip-off of [Notion AI](https://www.notion.so/product/ai)
+I made this because I got jealous of Notion's AI feature. 
 
-This is a sample plugin for Obsidian (https://obsidian.md).
+# FAQ
+## How does it work?
+It uses [ChatGPT](https://chat.openai.com/chat)
 
-This project uses Typescript to provide type checking and documentation.
-The repo depends on the latest plugin API (obsidian.d.ts) in Typescript Definition format, which contains TSDoc comments describing what it does.
+## How do I use it?
+1. Install the plugin
+2. Follow the installation instructions of [ChatGPT API Server](https://github.com/ChatGPT-Hackers/ChatGPT-API-server) and [ChatGPT API Agent](https://github.com/ChatGPT-Hackers/ChatGPT-API-agent)
+3. Start the ChatGPT API Server and Agent in your localhost in port 8080 (I plan to make this configurable in the future)
+4. Create a new note
+5. Open the command palette and type `Obsidian AI: ` to see the available commands
 
-**Note:** The Obsidian API is still in early alpha and is subject to change at any time!
+## Will Notion come after you?
+I don't think so. I'm not using their API. I'm using [ChatGPT](https://chat.openai.com/chat) which is a free API (for now). I'm just using the same name as Notion's AI feature.
+That last line was created by GitHub Copilot. In all honestly I have no clue and rest assured I'll remove this if Notion comes after me.
 
-This sample plugin demonstrates some of the basic functionality the plugin API can do.
-- Changes the default font color to red using `styles.css`.
-- Adds a ribbon icon, which shows a Notice when clicked.
-- Adds a command "Open Sample Modal" which opens a Modal.
-- Adds a plugin setting tab to the settings page.
-- Registers a global click event and output 'click' to the console.
-- Registers a global interval which logs 'setInterval' to the console.
+## Will OpenAI come after you?
+Ehhh maybe? I doubt it. I'd guess it's against their EULA to use ChatGPT as an API but who was time to read EULAs?
 
-## First time developing plugins?
+## What will you do once ChatGPT is no longer free?
+I WON'T make this a paid plugin. I want it to be able to use different GPT-3 APIs (OpenAI, GPT-J, etc.).
+That won't happen as long as I don't want to pay for an API key (and I hate paying) so if you have a spare key and for some crazy reason liked this plugin, please contact me.
 
-Quick starting guide for new plugin devs:
+## I did X and it broke/didn't work
+Yeah I didn't test this much. If you want it fixed open an issue or a PR.
 
-- Check if [someone already developed a plugin for what you want](https://obsidian.md/plugins)! There might be an existing plugin similar enough that you can partner up with.
-- Make a copy of this repo as a template with the "Use this template" button (login to GitHub if you don't see it).
-- Clone your repo to a local development folder. For convenience, you can place this folder in your `.obsidian/plugins/your-plugin-name` folder.
-- Install NodeJS, then run `npm i` in the command line under your repo folder.
-- Run `npm run dev` to compile your plugin from `main.ts` to `main.js`.
-- Make changes to `main.ts` (or create new `.ts` files). Those changes should be automatically compiled into `main.js`.
-- Reload Obsidian to load the new version of your plugin.
-- Enable plugin in settings window.
-- For updates to the Obsidian API run `npm update` in the command line under your repo folder.
+## Will it work on mobile?
+Not right now since it is hardcoded to look for the endpoint at `http://localhost:8080/`. I plan to make this configurable in the future.
+When that is done, it should(?) work on mobile. No clue tho, this is my first plugin.
 
-## Releasing new releases
-
-- Update your `manifest.json` with your new version number, such as `1.0.1`, and the minimum Obsidian version required for your latest release.
-- Update your `versions.json` file with `"new-plugin-version": "minimum-obsidian-version"` so older versions of Obsidian can download an older version of your plugin that's compatible.
-- Create new GitHub release using your new version number as the "Tag version". Use the exact version number, don't include a prefix `v`. See here for an example: https://github.com/obsidianmd/obsidian-sample-plugin/releases
-- Upload the files `manifest.json`, `main.js`, `styles.css` as binary attachments. Note: The manifest.json file must be in two places, first the root path of your repository and also in the release.
-- Publish the release.
-
-> You can simplify the version bump process by running `npm version patch`, `npm version minor` or `npm version major` after updating `minAppVersion` manually in `manifest.json`.
-> The command will bump version in `manifest.json` and `package.json`, and add the entry for the new version to `versions.json`
-
-## Adding your plugin to the community plugin list
-
-- Check https://github.com/obsidianmd/obsidian-releases/blob/master/plugin-review.md
-- Publish an initial version.
-- Make sure you have a `README.md` file in the root of your repo.
-- Make a pull request at https://github.com/obsidianmd/obsidian-releases to add your plugin.
-
-## How to use
-
-- Clone this repo.
-- `npm i` or `yarn` to install dependencies
-- `npm run dev` to start compilation in watch mode.
-
-## Manually installing the plugin
-
-- Copy over `main.js`, `styles.css`, `manifest.json` to your vault `VaultFolder/.obsidian/plugins/your-plugin-id/`.
-
-## Improve code quality with eslint (optional)
-- [ESLint](https://eslint.org/) is a tool that analyzes your code to quickly find problems. You can run ESLint against your plugin to find common bugs and ways to improve your code. 
-- To use eslint with this project, make sure to install eslint from terminal:
-  - `npm install -g eslint`
-- To use eslint to analyze this project use this command:
-  - `eslint main.ts`
-  - eslint will then create a report with suggestions for code improvement by file and line number.
-- If your source code is in a folder, such as `src`, you can use eslint with this command to analyze all files in that folder:
-  - `eslint .\src\`
-
-## Funding URL
-
-You can include funding URLs where people who use your plugin can financially support it.
-
-The simple way is to set the `fundingUrl` field to your link in your `manifest.json` file:
-
-```json
-{
-    "fundingUrl": "https://buymeacoffee.com"
-}
-```
-
-If you have multiple URLs, you can also do:
-
-```json
-{
-    "fundingUrl": {
-        "Buy Me a Coffee": "https://buymeacoffee.com",
-        "GitHub Sponsor": "https://github.com/sponsors",
-        "Patreon": "https://www.patreon.com/"
-    }
-}
-```
-
-## API Documentation
-
-See https://github.com/obsidianmd/obsidian-api
+# Credits
+TODO: Add credits correctly because I hate not giving proper credit to people
+- https://github.com/sw-yx/ai-notes/blob/main/Resources/Notion%20AI%20Prompts.md
+- https://lspace.swyx.io/p/reverse-prompt-eng
+- https://github.com/ChatGPT-Hackers/ChatGPT-API-server
+- https://github.com/ChatGPT-Hackers/ChatGPT-API-agent
