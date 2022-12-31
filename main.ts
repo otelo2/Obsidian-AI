@@ -1,4 +1,4 @@
-import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
+import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting, Vault} from 'obsidian';
 import {ChatGPT} from './ChatGPT';
 
 // Remember to rename these classes and interfaces!
@@ -36,9 +36,39 @@ export default class ObsidianAI extends Plugin {
 			editorCallback: async (editor: Editor, view: MarkdownView) => {
 				let cgpt:ChatGPT
 				cgpt = new ChatGPT();
-				let response = cgpt.pleaseWork("http://localhost:8080/api/ask");
+				let response = cgpt.makePostRequest("http://localhost:8080/api/ask");
 				console.log(editor.getSelection());
 				editor.replaceSelection(await response);
+			}
+		});
+		// This adds a simple command that can be triggered anywhere
+		this.addCommand({
+			id: 'help-me-write',
+			name: 'Help me write (write more content to the document - reads all the text in the document)',
+			editorCallback: async (editor: Editor, view: MarkdownView) => {
+				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+				if (activeView) { 
+					let obsidianAPI = new ChatGPT();
+					let fileContents = this.app.vault.cachedRead(activeView.file);
+					let response = obsidianAPI.helpMeWrite(await fileContents);
+					console.log(editor.getSelection());
+					editor.replaceSelection(await response || "");
+				}
+			}
+		});
+		// This adds a simple command that can be triggered anywhere
+		this.addCommand({
+			id: 'ask-question',
+			name: 'Ask a question (sends the document text to the AI)',
+			editorCallback: async (editor: Editor, view: MarkdownView) => {
+				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+				if (activeView) { 
+					let obsidianAPI = new ChatGPT();
+					let fileContents = this.app.vault.cachedRead(activeView.file);
+					let response = obsidianAPI.ask(await fileContents);
+					console.log(editor.getSelection());
+					editor.replaceSelection(await response || "");
+				}
 			}
 		});
 		// This adds a simple command that can be triggered anywhere
