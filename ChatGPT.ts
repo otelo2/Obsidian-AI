@@ -13,10 +13,15 @@ export class ChatGPT{
         body: '{"content": "What are you?"}'
     }
 
-    private sendToAPI = async (file: string, prompt: string) => {
+    private sendToAPI = async (url:string, file: string, prompt: string) => {
+        // Set the URL
+        this.params.url = url;
+
+        // Remove newlines, tabs, and quotes from the file and prompt
         file = file.replace(/(\r\n|\n|\r|\t|")/gm, " ");
         prompt = prompt.replace(/(\r\n|\n|\r|\t|")/gm, " ");
 
+        // Set the body
         this.params.body = `{"content": "${file} ${prompt}"}`;
 
         console.log(this.params.body);
@@ -38,24 +43,24 @@ export class ChatGPT{
         }
     }
 
-    public helpMeWrite = async (file:string) =>{
+    public helpMeWrite = async (url:string, file:string) =>{
         // Prompt for GPT
         let prompt = `You are an assistant helping a user write more content in a document based on a prompt. Output in markdown format. Do not use links. Do not include literal content from the original document.
 Use this format, replacing text in brackets with the result. Do not include the brackets in the output: 
 Output in [Identified language of the document]: 
 [Output based on the prompt, in markdown format.]`;
 
-        return await this.sendToAPI(file, prompt);
+        return await this.sendToAPI(url, file, prompt);
     }
 
-    public ask = async (file:string) =>{
+    public ask = async (url:string, file:string) =>{
         // Prompt for GPT
         let prompt = ""
 
-        return await this.sendToAPI(file, prompt);
+        return await this.sendToAPI(url, file, prompt);
     }
 
-    public brainstormIdeas = async (file:string) =>{
+    public brainstormIdeas = async (url:string, file:string) =>{
         // Prompt for GPT
         let prompt = `You are an assistant helping brainstorm a list of ideas inside a document.
         Use this format, replacing text in brackets with the result. Do not include the brackets in the output:
@@ -72,7 +77,7 @@ Output in [Identified language of the document]:
         - [Idea 9]
         - [Idea 10]`;
 
-        return await this.sendToAPI(file, prompt);
+        return await this.sendToAPI(url, file, prompt);
     }
 
 }

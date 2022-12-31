@@ -4,11 +4,13 @@ import {ChatGPT} from './ChatGPT';
 // Remember to rename these classes and interfaces!
 
 interface MyPluginSettings {
-	mySetting: string;
+	url: string;
+	apikey: string;
 }
 
 const DEFAULT_SETTINGS: MyPluginSettings = {
-	mySetting: 'default'
+	url: 'http://localhost:8080/api/ask',
+	apikey: 'adminkey'
 }
 
 export default class ObsidianAI extends Plugin {
@@ -29,6 +31,22 @@ export default class ObsidianAI extends Plugin {
 		const statusBarItemEl = this.addStatusBarItem();
 		statusBarItemEl.setText('Status Bar Text');
 
+		// Just sends the text of the document to the AI
+		this.addCommand({
+			id: 'ask-question',
+			name: 'Ask a question (sends the document text to the AI)',
+			editorCallback: async (editor: Editor, view: MarkdownView) => {
+				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+				if (activeView) { 
+					console.log(this.settings.url);
+					let obsidianAPI = new ChatGPT();
+					let fileContents = this.app.vault.cachedRead(activeView.file);
+					let response = obsidianAPI.ask(this.settings.url, await fileContents);
+					console.log(editor.getSelection());
+					editor.replaceSelection(await response || "");
+				}
+			}
+		});
 		// Adds more text to an existing document
 		this.addCommand({
 			id: 'help-me-write',
@@ -38,22 +56,7 @@ export default class ObsidianAI extends Plugin {
 				if (activeView) { 
 					let obsidianAPI = new ChatGPT();
 					let fileContents = this.app.vault.cachedRead(activeView.file);
-					let response = obsidianAPI.helpMeWrite(await fileContents);
-					console.log(editor.getSelection());
-					editor.replaceSelection(await response || "");
-				}
-			}
-		});
-		// Just sends the text of the document to the AI
-		this.addCommand({
-			id: 'ask-question',
-			name: 'Ask a question (sends the document text to the AI)',
-			editorCallback: async (editor: Editor, view: MarkdownView) => {
-				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
-				if (activeView) { 
-					let obsidianAPI = new ChatGPT();
-					let fileContents = this.app.vault.cachedRead(activeView.file);
-					let response = obsidianAPI.ask(await fileContents);
+					let response = obsidianAPI.helpMeWrite(this.settings.url, await fileContents);
 					console.log(editor.getSelection());
 					editor.replaceSelection(await response || "");
 				}
@@ -69,7 +72,7 @@ export default class ObsidianAI extends Plugin {
 					let obsidianAPI = new ChatGPT();
 					let fileContents = this.app.vault.cachedRead(activeView.file);
 					// Call the corresponding prompt
-					let response = obsidianAPI.brainstormIdeas(await fileContents);
+					let response = obsidianAPI.brainstormIdeas(this.settings.url, await fileContents);
 					console.log(editor.getSelection());
 					editor.replaceSelection(await response || "");
 				}
@@ -113,7 +116,7 @@ export default class ObsidianAI extends Plugin {
 		});
 
 		// This adds a settings tab so the user can configure various aspects of the plugin
-		this.addSettingTab(new SampleSettingTab(this.app, this));
+		this.addSettingTab(new ObsidianAISettingTab(this.app, this));
 
 		// If the plugin hooks up any global DOM events (on parts of the app that doesn't belong to this plugin)
 		// Using this function will automatically remove the event listener when this plugin is disabled.
@@ -154,7 +157,7 @@ class SampleModal extends Modal {
 	}
 }
 
-class SampleSettingTab extends PluginSettingTab {
+class ObsidianAISettingTab extends PluginSettingTab {
 	plugin: ObsidianAI;
 
 	constructor(app: App, plugin: ObsidianAI) {
@@ -167,17 +170,28 @@ class SampleSettingTab extends PluginSettingTab {
 
 		containerEl.empty();
 
-		containerEl.createEl('h2', {text: 'Settings for my awesome plugin.'});
+		containerEl.createEl('h2', {text: 'Settings for Obsidian AI.'});
 
 		new Setting(containerEl)
-			.setName('Setting #1')
-			.setDesc('It\'s a secret')
+			.setName('URL')
+			.setDesc('The URL for the API')
 			.addText(text => text
-				.setPlaceholder('Enter your secret')
-				.setValue(this.plugin.settings.mySetting)
+				.setPlaceholder('http://localhost:8080/api/ask')
+				.setValue(this.plugin.settings.url)
 				.onChange(async (value) => {
 					console.log('Secret: ' + value);
-					this.plugin.settings.mySetting = value;
+					this.plugin.settings.url = value;
+					await this.plugin.saveSettings();
+				}));
+		new Setting(containerEl)
+			.setName('Port')
+			.setDesc('API Key')
+			.addText(text => text
+				.setPlaceholder('adminkey')
+				.setValue(this.plugin.settings.apikey)
+				.onChange(async (value) => {
+					console.log('Secret: ' + value);
+					this.plugin.settings.apikey = value;
 					await this.plugin.saveSettings();
 				}));
 	}
