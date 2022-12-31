@@ -31,6 +31,10 @@ Yeah I didn't test this much. If you want it fixed open an issue or a PR.
 Not right now since it is hardcoded to look for the endpoint at `http://localhost:8080/`. I plan to make this configurable in the future.
 When that is done, it should(?) work on mobile. No clue tho, this is my first plugin.
 
+## Plans for the future?
+Once ChatGPT is no longer free, I plan to add different configurations to let you use different GPT-3 APIs. 
+I want it for you to host your own endpoint or use a public one. Once that is done I might try to upload it to the community plugins repo but that assumes I don't get sued by Notion or OpenAI. Or that I don't get bored of this.
+
 # Credits
 TODO: Add credits correctly because I hate not giving proper credit to people
 - https://github.com/sw-yx/ai-notes/blob/main/Resources/Notion%20AI%20Prompts.md
