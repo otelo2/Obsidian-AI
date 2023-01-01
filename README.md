@@ -28,8 +28,8 @@ That won't happen as long as I don't want to pay for an API key (and I hate payi
 Yeah I didn't test this much. If you want it fixed open an issue or a PR.
 
 ## Will it work on mobile?
-Not right now since it is hardcoded to look for the endpoint at `http://localhost:8080/`. I plan to make this configurable in the future.
-When that is done, it should(?) work on mobile. No clue tho, this is my first plugin.
+I guess. You can edit the endpoint in the settings to point to your server instead of localhost and it should work well.
+But honestly I have no clue. This is my first plugin so I have no clue if mobile needs special attention.
 
 ## Plans for the future?
 Once ChatGPT is no longer free, I plan to add different configurations to let you use different GPT-3 APIs. 
