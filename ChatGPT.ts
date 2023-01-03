@@ -21,6 +21,11 @@ export class ChatGPT{
         file = file.replace(/(\r\n|\n|\r|\t|")/gm, " ");
         prompt = prompt.replace(/(\r\n|\n|\r|\t|")/gm, " ");
 
+        // Append a period to the file if it doesn't end with one
+        if (file.slice(-1) !== ".") {
+            file = file + ".";
+        }
+
         // Set the body
         this.params.body = `{"content": "${file} ${prompt}"}`;
 

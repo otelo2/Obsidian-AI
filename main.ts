@@ -1,4 +1,5 @@
 import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting, Vault} from 'obsidian';
+import { PromptModal } from 'PromptModal';
 import {ChatGPT} from './ChatGPT';
 
 // Remember to rename these classes and interfaces!
@@ -75,6 +76,20 @@ export default class ObsidianAI extends Plugin {
 					let response = obsidianAPI.brainstormIdeas(this.settings.url, await fileContents);
 					console.log(editor.getSelection());
 					editor.replaceSelection(await response || "");
+				}
+			}
+		});
+		// Adds a command that uses the PromptModal
+		this.addCommand({
+			id: 'prompt-modal',
+			name: 'Prompt Modal',
+			editorCallback: async (editor: Editor, view: MarkdownView) => {
+				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+				if (activeView) {
+					let obsidianAPI = new ChatGPT();
+					new PromptModal(this.app, "Test modal", "What would you like to write about? \n For example, '5 reasons why we should hire a dedicated designer'", this.settings.url, obsidianAPI.helpMeWrite, (result) => {
+						editor.replaceSelection(result || "");
+					}).open();
 				}
 			}
 		});
