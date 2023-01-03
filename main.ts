@@ -51,81 +51,42 @@ export default class ObsidianAI extends Plugin {
 		// Adds more text to an existing document
 		this.addCommand({
 			id: 'help-me-write',
-			name: 'Help me write (write more content to the document - reads all the text in the document)',
+			name: 'Help me write (write more content to the document)',
 			editorCallback: async (editor: Editor, view: MarkdownView) => {
 				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
-				if (activeView) { 
+				if (activeView) {
 					let obsidianAPI = new ChatGPT();
-					let fileContents = this.app.vault.cachedRead(activeView.file);
-					let response = obsidianAPI.helpMeWrite(this.settings.url, await fileContents);
-					console.log(editor.getSelection());
-					editor.replaceSelection(await response || "");
+					new PromptModal(this.app, "Help Me Write", "What would you like to write about? \n For example, '5 reasons why we should hire a dedicated designer'", this.settings.url, obsidianAPI.helpMeWrite, (result) => {
+						editor.replaceSelection(result || "");
+					}).open();
 				}
 			}
 		});
 		// Adds 10 ideas to the document
 		this.addCommand({
 			id: 'brainstorm-ideas',
-			name: 'Brainstorm Ideas (10 ideas based on the topic - reads all the text in the document)',
-			editorCallback: async (editor: Editor, view: MarkdownView) => {
-				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
-				if (activeView) { 
-					let obsidianAPI = new ChatGPT();
-					let fileContents = this.app.vault.cachedRead(activeView.file);
-					// Call the corresponding prompt
-					let response = obsidianAPI.brainstormIdeas(this.settings.url, await fileContents);
-					console.log(editor.getSelection());
-					editor.replaceSelection(await response || "");
-				}
-			}
-		});
-		// Adds a command that uses the PromptModal
-		this.addCommand({
-			id: 'prompt-modal',
-			name: 'Prompt Modal',
+			name: 'Brainstorm Ideas (10 ideas based on the topic)',
 			editorCallback: async (editor: Editor, view: MarkdownView) => {
 				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
 				if (activeView) {
 					let obsidianAPI = new ChatGPT();
-					new PromptModal(this.app, "Test modal", "What would you like to write about? \n For example, '5 reasons why we should hire a dedicated designer'", this.settings.url, obsidianAPI.helpMeWrite, (result) => {
+					new PromptModal(this.app, "Test Prompt modal", "What would you like to write about? \n For example, '5 reasons why we should hire a dedicated designer'", this.settings.url, obsidianAPI.brainstormIdeas, (result) => {
 						editor.replaceSelection(result || "");
 					}).open();
 				}
 			}
 		});
-		// This adds a simple command that can be triggered anywhere
+		// Adds a command that uses the PromptModal
 		this.addCommand({
-			id: 'open-sample-modal-simple',
-			name: 'Open sample modal (simple)',
-			callback: () => {
-				new SampleModal(this.app).open();
-			}
-		});
-		// This adds an editor command that can perform some operation on the current editor instance
-		this.addCommand({
-			id: 'sample-editor-command',
-			name: 'Sample editor command',
-			editorCallback: (editor: Editor, view: MarkdownView) => {
-				console.log(editor.getSelection());
-				editor.replaceSelection('Sample Editor Command');
-			}
-		});
-		// This adds a complex command that can check whether the current state of the app allows execution of the command
-		this.addCommand({
-			id: 'open-sample-modal-complex',
-			name: 'Open sample modal (complex)',
-			checkCallback: (checking: boolean) => {
-				// Conditions to check
-				const markdownView = this.app.workspace.getActiveViewOfType(MarkdownView);
-				if (markdownView) {
-					// If checking is true, we're simply "checking" if the command can be run.
-					// If checking is false, then we want to actually perform the operation.
-					if (!checking) {
-						new SampleModal(this.app).open();
-					}
-
-					// This command will only show up in Command Palette when the check function returns true
-					return true;
+			id: 'test-prompt-modal',
+			name: 'Test Prompt Modal',
+			editorCallback: async (editor: Editor, view: MarkdownView) => {
+				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+				if (activeView) {
+					let obsidianAPI = new ChatGPT();
+					new PromptModal(this.app, "Test Prompt modal", "What would you like to write about? \n For example, '5 reasons why we should hire a dedicated designer'", this.settings.url, obsidianAPI.helpMeWrite, (result) => {
+						editor.replaceSelection(result || "");
+					}).open();
 				}
 			}
 		});
