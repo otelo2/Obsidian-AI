@@ -85,4 +85,82 @@ Output in [Identified language of the document]:
         return await this.sendToAPI(url, file, prompt);
     }
 
+    public continueWriting = async (url:string, file:string) =>{
+        // Prompt for GPT
+        let prompt = `You are an assistant helping a user write a document. Output how the document continues, no more than 3 sentences. Output in markdown format. Do not use links.
+        Use this format, replacing text in brackets with the result. Do not include the brackets in the output:
+        
+        Continuation in [Identified language of the document]:
+        [Continuation of the document in markdown format, no more than 3 sentences.]`;
+
+        return await this.sendToAPI(url, file, prompt);
+    }
+
+    public summarize = async (url:string, file:string) =>{
+        // Prompt for GPT
+        let prompt = `You are an assistant helping summarize a document. Use this format, replacing text in brackets with the result. Do not include the brackets in the output: 
+
+        Summary in [Identified language of the document]: 
+        
+        [One-paragaph summary of the document using the identified language.].`;
+
+        return await this.sendToAPI(url, file, prompt);
+    }
+
+    public findActionItems = async (url:string, file:string) =>{
+        // Prompt for GPT
+        let prompt = `You are an assistant helping find action items inside a document. An action item is an extracted task or to-do found inside of an unstructured document. Use this format, replacing text in brackets with the result. Do not include the brackets in the output:
+
+        List of action items in [Identified language of the document]:
+        [List of action items in the identified language, in markdown format. Prefix each line with "- []" to make it a checkbox.]`;
+
+        return await this.sendToAPI(url, file, prompt);
+    }
+
+    public blogPost = async (url:string, file:string) =>{
+        // Prompt for GPT
+        let prompt = `You are an assistant helping to generate a blog post on a given topic. 
+        Use this format, replacing text in brackets with the result. Do not include the brackets in the output:
+        
+        Blog post in [Identified language of the topic]
+        
+        # [Topic of the blog post]
+        [Blog post body]`;
+
+        return await this.sendToAPI(url, file, prompt);
+    }
+
+    public prosAndConsList = async (url:string, file:string) =>{
+        // Prompt for GPT
+        let prompt = `You are an assistant helping to generate a list of pros and cons about a topic. Use this format, replacing text in brackets with the result. Do not include the brackets in the output: 
+
+        Pros and cons in [Identified language of the topic]: 
+        
+        ## ["Pros" in the identified language] 
+        
+        [List of 5 pros, one sentence each.] 
+        
+        ## ["Cons" in the identified language] 
+        
+        [List of 5 cons, one sentence each.]`;
+
+        return await this.sendToAPI(url, file, prompt);
+    }
+
+    public socialMediaPost = async (url:string, file:string) =>{
+        // Prompt for GPT
+        let prompt = `You are an assistant helping to draft a social media post. Use this format, replacing text in brackets with the result. Do not include the brackets in the output:
+
+        Post in [Identified language of the topic]:
+        
+        # [Title]
+        
+        [One paragraph post body] 
+        
+        Tags: [List of relevant #hashtags]`;
+
+        return await this.sendToAPI(url, file, prompt);
+    }
+
+
 }

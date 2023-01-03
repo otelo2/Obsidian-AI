@@ -32,6 +32,7 @@ export default class ObsidianAI extends Plugin {
 		const statusBarItemEl = this.addStatusBarItem();
 		statusBarItemEl.setText('Status Bar Text');
 
+		//TODO: Add different descriptions for each command
 		// Just sends the text of the document to the AI
 		this.addCommand({
 			id: 'ask-question',
@@ -51,7 +52,7 @@ export default class ObsidianAI extends Plugin {
 		// Adds more text to an existing document
 		this.addCommand({
 			id: 'help-me-write',
-			name: 'Help me write (write more content to the document)',
+			name: 'Help Me Write (write more content to the document)',
 			editorCallback: async (editor: Editor, view: MarkdownView) => {
 				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
 				if (activeView) {
@@ -59,6 +60,22 @@ export default class ObsidianAI extends Plugin {
 					new PromptModal(this.app, "Help Me Write", "What would you like to write about? \n For example, '5 reasons why we should hire a dedicated designer'", this.settings.url, obsidianAPI.helpMeWrite, (result) => {
 						editor.replaceSelection(result || "");
 					}).open();
+				}
+			}
+		});
+		// Continues writing the document using the existing text - Promptless
+		this.addCommand({
+			id: 'continue-writing',
+			name: 'Continue Writing (AI continues based on existing text - propmtless))',
+			editorCallback: async (editor: Editor, view: MarkdownView) => {
+				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+				if (activeView) { 
+					let obsidianAPI = new ChatGPT();
+					let fileContents = this.app.vault.cachedRead(activeView.file);
+					// Call the corresponding prompt
+					let response = obsidianAPI.continueWriting(this.settings.url, await fileContents);
+					console.log(editor.getSelection());
+					editor.replaceSelection(await response || "");
 				}
 			}
 		});
@@ -70,7 +87,97 @@ export default class ObsidianAI extends Plugin {
 				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
 				if (activeView) {
 					let obsidianAPI = new ChatGPT();
-					new PromptModal(this.app, "Test Prompt modal", "What would you like to write about? \n For example, '5 reasons why we should hire a dedicated designer'", this.settings.url, obsidianAPI.brainstormIdeas, (result) => {
+					new PromptModal(this.app, "Brainstorm Ideas", "What would you like to brainstorm about? \n For example, '10 ways to throw a birthday party'", this.settings.url, obsidianAPI.brainstormIdeas, (result) => {
+						editor.replaceSelection(result || "");
+					}).open();
+				}
+			}
+		});
+		// Summarizes the current document - Promptless
+		this.addCommand({
+			id: 'summarize',
+			name: 'Summarize (based on existing text - propmtless))',
+			editorCallback: async (editor: Editor, view: MarkdownView) => {
+				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+				if (activeView) { 
+					let obsidianAPI = new ChatGPT();
+					let fileContents = this.app.vault.cachedRead(activeView.file);
+					// Call the corresponding prompt
+					let response = obsidianAPI.summarize(this.settings.url, await fileContents);
+					console.log(editor.getSelection());
+					editor.replaceSelection(await response || "");
+				}
+			}
+		});
+		// Finds action items in the current document - Promptless
+		this.addCommand({
+			id: 'find-action-items',
+			name: 'Find action items (based on existing text - propmtless))',
+			editorCallback: async (editor: Editor, view: MarkdownView) => {
+				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+				if (activeView) { 
+					let obsidianAPI = new ChatGPT();
+					let fileContents = this.app.vault.cachedRead(activeView.file);
+					// Call the corresponding prompt
+					let response = obsidianAPI.findActionItems(this.settings.url, await fileContents);
+					console.log(editor.getSelection());
+					editor.replaceSelection(await response || "");
+				}
+			}
+		});
+		// Finds action items in the current document - Promptless
+		this.addCommand({
+			id: 'find-action-items',
+			name: 'Find action items (based on existing text - propmtless))',
+			editorCallback: async (editor: Editor, view: MarkdownView) => {
+				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+				if (activeView) { 
+					let obsidianAPI = new ChatGPT();
+					let fileContents = this.app.vault.cachedRead(activeView.file);
+					// Call the corresponding prompt
+					let response = obsidianAPI.findActionItems(this.settings.url, await fileContents);
+					console.log(editor.getSelection());
+					editor.replaceSelection(await response || "");
+				}
+			}
+		});
+		// Write a blog post about the given topic
+		this.addCommand({
+			id: 'blog-post',
+			name: 'Blog Post (Write a blog post about the given topic)',
+			editorCallback: async (editor: Editor, view: MarkdownView) => {
+				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+				if (activeView) {
+					let obsidianAPI = new ChatGPT();
+					new PromptModal(this.app, "Blog Post", "What should the blog post be about? \n For example, 'the benefits of practicing mindfulness and meditation'", this.settings.url, obsidianAPI.blogPost, (result) => {
+						editor.replaceSelection(result || "");
+					}).open();
+				}
+			}
+		});
+		// Write list of 5 pros and 5 cons about the given topic
+		this.addCommand({
+			id: 'pros-and-cons-list',
+			name: 'Pros and Cons List (Write 5 pros and 5 cons list about the given topic)',
+			editorCallback: async (editor: Editor, view: MarkdownView) => {
+				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+				if (activeView) {
+					let obsidianAPI = new ChatGPT();
+					new PromptModal(this.app, "Pros and Cons List", "What should the blog post be about? \n For example, 'the benefits of practicing mindfulness and meditation'", this.settings.url, obsidianAPI.prosAndConsList, (result) => {
+						editor.replaceSelection(result || "");
+					}).open();
+				}
+			}
+		});
+		// Write social media post about the given topic
+		this.addCommand({
+			id: 'social-media-post',
+			name: 'Social Media Post (Write a social media post about the given topic)',
+			editorCallback: async (editor: Editor, view: MarkdownView) => {
+				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+				if (activeView) {
+					let obsidianAPI = new ChatGPT();
+					new PromptModal(this.app, "Social Media Post", "What should the blog post be about? \n For example, 'the benefits of practicing mindfulness and meditation'", this.settings.url, obsidianAPI.socialMediaPost, (result) => {
 						editor.replaceSelection(result || "");
 					}).open();
 				}
