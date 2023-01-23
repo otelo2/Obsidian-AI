@@ -183,6 +183,140 @@ export default class ObsidianAI extends Plugin {
 				}
 			}
 		});
+		// Write an outline about the given topic
+		this.addCommand({
+			id: 'outline',
+			name: 'Outline (Write an outline about the given topic)',
+			editorCallback: async (editor: Editor, view: MarkdownView) => {
+				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+				if (activeView) {
+					let obsidianAPI = new ChatGPT();
+					new PromptModal(this.app, "Outline", "What do you want to make an outline for? \n For example, 'a detailed step-by-step process for getting into university'", this.settings.url, obsidianAPI.outline, (result) => {
+						editor.replaceSelection(result || "");
+					}).open();
+				}
+			}
+		});
+		// Write a creative story about the given topic
+		this.addCommand({
+			id: 'creative-story',
+			name: 'Creative story (Write a creative story about the given topic)',
+			editorCallback: async (editor: Editor, view: MarkdownView) => {
+				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+				if (activeView) {
+					let obsidianAPI = new ChatGPT();
+					// TODO: Add a placeholder text
+					new PromptModal(this.app, "Creative story", "TODO", this.settings.url, obsidianAPI.creativeStory, (result) => {
+						editor.replaceSelection(result || "");
+					}).open();
+				}
+			}
+		});
+		// Write a poem about the given topic
+		this.addCommand({
+			id: 'poem',
+			name: 'Poem (Write a poem about the given topic)',
+			editorCallback: async (editor: Editor, view: MarkdownView) => {
+				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+				if (activeView) {
+					let obsidianAPI = new ChatGPT();
+					// TODO: Add a placeholder text
+					new PromptModal(this.app, "Poem", "TODO", this.settings.url, obsidianAPI.poem, (result) => {
+						editor.replaceSelection(result || "");
+					}).open();
+				}
+			}
+		});
+		// Write a essay about the given topic
+		this.addCommand({
+			id: 'essay',
+			name: 'Essay (Write a Essay about the given topic)',
+			editorCallback: async (editor: Editor, view: MarkdownView) => {
+				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+				if (activeView) {
+					let obsidianAPI = new ChatGPT();
+					// TODO: Add a placeholder text
+					new PromptModal(this.app, "Essay", "TODO", this.settings.url, obsidianAPI.essay, (result) => {
+						editor.replaceSelection(result || "");
+					}).open();
+				}
+			}
+		});
+		// Write a meeting agenda about the given topic
+		this.addCommand({
+			id: 'meeting-agenda',
+			name: 'Meeting agenda (Write a meeting agenda about the given topic)',
+			editorCallback: async (editor: Editor, view: MarkdownView) => {
+				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+				if (activeView) {
+					let obsidianAPI = new ChatGPT();
+					// TODO: Add a placeholder text
+					new PromptModal(this.app, "Meeting agenda", "TODO", this.settings.url, obsidianAPI.meetingAgenda, (result) => {
+						editor.replaceSelection(result || "");
+					}).open();
+				}
+			}
+		});
+		// Write a press release about the given topic
+		this.addCommand({
+			id: 'press-release',
+			name: 'Press release (Write a press release about the given topic)',
+			editorCallback: async (editor: Editor, view: MarkdownView) => {
+				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+				if (activeView) {
+					let obsidianAPI = new ChatGPT();
+					// TODO: Add a placeholder text
+					new PromptModal(this.app, "Press release", "TODO", this.settings.url, obsidianAPI.pressRelease, (result) => {
+						editor.replaceSelection(result || "");
+					}).open();
+				}
+			}
+		});
+		// Write a job description about the given topic
+		this.addCommand({
+			id: 'job-description',
+			name: 'Job description (Write a job description about the given topic)',
+			editorCallback: async (editor: Editor, view: MarkdownView) => {
+				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+				if (activeView) {
+					let obsidianAPI = new ChatGPT();
+					// TODO: Add a placeholder text
+					new PromptModal(this.app, "Job description", "TODO", this.settings.url, obsidianAPI.jobDescription, (result) => {
+						editor.replaceSelection(result || "");
+					}).open();
+				}
+			}
+		});
+		// Write a sales email about the given topic
+		this.addCommand({
+			id: 'sales-email',
+			name: 'Sales email (Write a sales email about the given topic)',
+			editorCallback: async (editor: Editor, view: MarkdownView) => {
+				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+				if (activeView) {
+					let obsidianAPI = new ChatGPT();
+					// TODO: Add a placeholder text
+					new PromptModal(this.app, "Sales email", "TODO", this.settings.url, obsidianAPI.salesEmail, (result) => {
+						editor.replaceSelection(result || "");
+					}).open();
+				}
+			}
+		});
+		// Write a recruiting email about the given topic
+		this.addCommand({
+			id: 'recruiting-email',
+			name: 'Recruiting email (Write a recruiting email about the given topic)',
+			editorCallback: async (editor: Editor, view: MarkdownView) => {
+				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+				if (activeView) {
+					let obsidianAPI = new ChatGPT();
+					// TODO: Add a placeholder text
+					new PromptModal(this.app, "Recruiting email", "TODO", this.settings.url, obsidianAPI.recruitingEmail, (result) => {
+						editor.replaceSelection(result || "");
+					}).open();
+				}
+			}
+		});
 		// Adds a command that uses the PromptModal
 		this.addCommand({
 			id: 'test-prompt-modal',

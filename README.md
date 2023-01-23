@@ -35,6 +35,42 @@ But honestly I have no clue. This is my first plugin so I have no clue if mobile
 Once ChatGPT is no longer free, I plan to add different configurations to let you use different GPT-3 APIs. 
 I want it for you to host your own endpoint or use a public one. Once that is done I might try to upload it to the community plugins repo but that assumes I don't get sued by Notion or OpenAI. Or that I don't get bored of this.
 
+## What is implemented? What is missing?
+### Implemented:
+These are the ones that I got from https://github.com/sw-yx/ai-notes/blob/main/Resources/Notion%20AI%20Prompts.md and watching videos on Notion AI.
+- [x] Help Me Write
+- [x] Continue Writing (promptless)
+- [x] Brainstorm Ideas
+- [x] Summarize (promptless)
+- [x] Find Action Items (promptless)
+- [x] Blog Post
+- [x] Pros and Cons List
+- [x] Social Media Post
+- [x] Outline
+- [x] Creative Story
+- [x] Poem
+- [x] Essay
+- [x] Meeting Agenda
+- [x] Press Release
+- [x] Job Description
+- [x] Sales Email
+- [x] Recruiting Email
+### Missing:
+Either because I don't have the "original" prompt or because I don't know how they work/if there are already above.
+- [ ] Improve writing
+- [ ] Fix spelling and grammar
+- [ ] Summarize
+- [ ] Translate
+- [ ] Explain this
+- [ ] Make longer
+- [ ] Make shorter
+- [ ] Find action items
+- [ ] Use simpler language
+- [ ] Help me edit
+- [ ] Help me write
+- [ ] Continue writing
+
+
 # Credits
 TODO: Add credits correctly because I hate not giving proper credit to people
 - https://github.com/sw-yx/ai-notes/blob/main/Resources/Notion%20AI%20Prompts.md

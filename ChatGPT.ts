@@ -162,5 +162,147 @@ Output in [Identified language of the document]:
         return await this.sendToAPI(url, file, prompt);
     }
 
+    public outline = async (url:string, file:string) =>{
+        
+        let prompt = `You are an assistant helping to draft an outline for a document. Use this format, replacing text in brackets with the result. Do not include the brackets in the output: 
 
+        Outline in [Identified language of the topic]: 
+        
+        # [Title of document] 
+        [Bulleted list outline of document, in markdown format]`
+
+        return await this.sendToAPI(url, file, prompt);
+    }
+
+    public creativeStory = async (url:string, file:string) =>{
+        
+        let prompt = `You are an assistant helping to write a creative story. Use this format, replacing text in brackets with the result. Do not include the brackets in the output: 
+
+        Story in [Identified language of the topic]: 
+        
+        # [Title of story] 
+        [First 5 paragraphs of story]`
+
+        return await this.sendToAPI(url, file, prompt);
+    }
+
+    public poem = async (url:string, file:string) =>{
+        
+        let prompt = `You are an assistant helping to write a poem. Use this format, replacing text in brackets with the result. Do not include the brackets in the output: 
+
+        Poem in [Identified language of the topic]: 
+        
+        # [Title of poem] 
+        [Poem, at least 4 lines]`
+
+        return await this.sendToAPI(url, file, prompt);
+    }
+
+    public essay = async (url:string, file:string) =>{
+        
+        let prompt = `You are an assistant helping to write an essay. 
+        Use this format, replacing text in brackets with the result. Do not include the brackets in the output: 
+        
+        Essay in [Identified language of the topic]:
+        
+          # [Essay title]
+          
+          [Introduction paragraph]
+          
+          ## [Name of topic 1]
+          
+          [Paragraph about topic 1]
+          
+          ## [Name of topic 2]
+          
+          [Paragraph about topic 2]
+          
+          ## [Name of topic 3]
+          
+          [Paragraph about topic 3]
+          
+          ## ['Conclusion', in the identified language of the topic]
+          
+          [Conclusion paragraph]`
+
+        return await this.sendToAPI(url, file, prompt);
+    }
+
+    public meetingAgenda = async (url:string, file:string) =>{
+        
+        let prompt = `You are an assistant helping to write a meeting agenda. 
+        Use this format, replacing text in brackets with the result. Do not include the brackets in the output: 
+        
+        Meeting agenda in [Identified language of the topic]: 
+        
+        # [Meeting name] 
+        
+        [Introduction paragraph about the purpose and goals of the meeting] 
+        
+        [Bulleted list of at least 3 topics, in markdown format. Make sure to include details for each topic.]`
+
+        return await this.sendToAPI(url, file, prompt);
+    }
+
+    public pressRelease = async (url:string, file:string) =>{
+        
+        let prompt = `You are an assistant helping to draft a press release. Use this format, replacing text in brackets with the result. Do not include the brackets in the output: 
+
+        Press release in [Identified language of the topic]: 
+        
+        # [Press release headline] 
+        [Press release body, in markdown format.] `
+
+        return await this.sendToAPI(url, file, prompt);
+    }
+
+    public jobDescription = async (url:string, file:string) =>{
+        
+        let prompt = `You are an assistant helping to draft a job description. Use this format, replacing text in brackets with the result. Do not include the brackets in the output: 
+
+        Job description in [Identified language of the prompt]: 
+        
+        # [Job title] 
+        
+        ## ["Overview", in the identified language] 
+        
+        [Overview of job, one paragraph] 
+        
+        ## ["Responsibilities", in the identified language] 
+        
+        [Bulleted list of at least 3 key responsibilities] 
+        
+        ## ["Qualificataions", in the identified language] 
+        
+        [Bulleted list of at least 3 key qualifications]`
+
+        return await this.sendToAPI(url, file, prompt);
+    }
+
+    public salesEmail = async (url:string, file:string) =>{
+        
+        let prompt = `You are an assistant helping to draft a personalized sales email. Use this format, replacing text in brackets with the result. Do not include the brackets in the output:
+
+        Output in [Identified language of the prompt]: 
+        
+        # [Sales email title] 
+        [Sales email subject] 
+        
+        [Sales email body]`
+
+        return await this.sendToAPI(url, file, prompt);
+    }
+
+    public recruitingEmail = async (url:string, file:string) =>{
+        
+        let prompt = `You are an assistant helping to draft a personalized recruiting email. Use this format, replacing text in brackets with the result. Do not include the brackets in the output:
+  
+        Recruiting email in [Identified language of the notes]:
+            
+        # [Recruiting email title]
+          
+            [Recruiting email subject] [Recruiting email body]`
+
+        return await this.sendToAPI(url, file, prompt);
+    }
 }
