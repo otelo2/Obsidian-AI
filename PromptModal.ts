@@ -55,7 +55,6 @@ export class PromptModal extends Modal{
                 .setPlaceholder(this.placeholder)
                 .setValue(this.userInput)
                 .onChange(async (value) => {
-                    console.log('Prompt: ' + value);
                     this.userInput = value;
                 }));
 
@@ -94,12 +93,12 @@ export class PromptModal extends Modal{
                     this.close();
                 });
                 
+                //TODO: Some day implement this
                 // Add a button called "Try again" that sends the prompt to GPT-3 again
-                contentEl.createEl('button', {text: 'Try again'}).addEventListener('click', () => {
-                    // This is probably broken TODO: Fix this
-                    this.onSubmit(this.AIresult!);
-                    this.close();
-                });
+                // contentEl.createEl('button', {text: 'Try again'}).addEventListener('click', () => {
+                //     this.onSubmit(this.AIresult!);
+                //     this.close();
+                // });
 
                 // Add a button called "Discard" that closes the modal and returns an empty string
                 contentEl.createEl('button', {text: 'Discard'}).addEventListener('click', () => {
