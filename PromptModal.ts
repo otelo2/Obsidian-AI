@@ -1,5 +1,27 @@
 import { App, Modal, Setting } from 'obsidian';
 import { ChatGPT } from './ChatGPT';
+import {Spinner} from 'spin.js';
+
+var opts = {
+    lines: 15, // The number of lines to draw
+    length: 33, // The length of each line
+    width: 2, // The line thickness
+    radius: 10, // The radius of the inner circle
+    scale: 1, // Scales overall size of the spinner
+    corners: 1, // Corner roundness (0..1)
+    speed: 0.5, // Rounds per second
+    rotate: 0, // The rotation offset
+    animation: 'spinner-line-fade-default', // The CSS animation name for the lines
+    direction: 1, // 1: clockwise, -1: counterclockwise
+    color: '#755be1', // CSS color or array of colors
+    fadeColor: 'transparent', // CSS color or array of colors
+    top: '50%', // Top position relative to parent
+    left: '50%', // Left position relative to parent
+    shadow: '0 0 1px transparent', // Box-shadow for the lines
+    zIndex: 2000000000, // The z-index (defaults to 2e9)
+    className: 'spinner', // The CSS class to assign to the spinner
+    position: 'absolute', // Element positioning
+};
 
 export class PromptModal extends Modal{
     userInput: string;
@@ -39,14 +61,19 @@ export class PromptModal extends Modal{
 
         contentEl.createEl('button', {text: 'Submit'}).addEventListener('click', () => {
             // TODO: Remove the prompt section
-            
             // Add a loading message
             contentEl.createEl('h2', {text: 'Loading...'});
+            // Add a loading spinner
+            let spinner = new Spinner(opts).spin(contentEl);
+
             // Send the prompt to GPT-3
             this.callback(this.url, this.userInput).then(async (result) => {
                 this.AIresult = await result;
                 // Remove the loading message
                 contentEl.removeChild(contentEl.lastChild!);
+                // Remove the loading spinner
+                spinner.stop();
+
                 // Update the result section with the result
                 contentEl.createEl('h2', {text: 'Result: '+this.userInput});
                 new Setting(contentEl)
