@@ -28,8 +28,10 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         TAG_NAME: ${{ env.TAG_NAME }}
       with:
-        tag_name: ${{ env.TAG_NAME }}
-        release_name: Release ${{ env.TAG_NAME }}
+        tag: ${{ env.TAG_NAME }}
+        name: Release ${{ env.TAG_NAME }}
         draft: false
         prerelease: false
+        generateReleaseNotes: true
+        makeLatest: true
         artifacts: build/*
