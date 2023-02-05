@@ -20,7 +20,7 @@ jobs:
       id: previoustag
       uses: WyriHaximus/github-action-get-previous-tag@v1
       with:
-        fallback: 0.0.2
+        fallback: 0.0.3
 
     - name: Create Release
       uses: ncipollo/release-action@v1.12.0
