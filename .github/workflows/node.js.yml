@@ -20,7 +20,10 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
@@ -28,3 +31,10 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm run build
+    - name: Automatic GitHub Release
+      uses: justincy/github-action-npm-release@2.0.2
+    - name: Print release output
+        if: ${{ steps.release.outputs.released == 'true' }}
+        run: echo Release ID ${{ steps.release.outputs.release_id }}
+
+
