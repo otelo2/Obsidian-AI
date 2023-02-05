@@ -22,9 +22,9 @@ jobs:
         name: build
         path: build
 
-    - name: 'Get Previous tag'
+    - name: Get Previous tag
         id: previoustag
-        uses: "WyriHaximus/github-action-get-previous-tag@v1"
+        uses: WyriHaximus/github-action-get-previous-tag@v1
         with:
           fallback: 0.0.2
 
