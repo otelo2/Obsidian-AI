@@ -16,12 +16,6 @@ jobs:
     - name: Build project
       run: npm ci && npm run build
 
-    - name: Archive artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: build
-        path: build
-
     - name: Get Previous tag
       id: previoustag
       uses: WyriHaximus/github-action-get-previous-tag@v1
@@ -40,4 +34,4 @@ jobs:
         prerelease: false
         generateReleaseNotes: true
         makeLatest: true
-        artifacts: build/*
+        artifacts: "main.js"
