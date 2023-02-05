@@ -34,7 +34,7 @@ jobs:
     - name: Automatic GitHub Release
       uses: justincy/github-action-npm-release@2.0.2
     - name: Print release output
-        if: ${{ steps.release.outputs.released == 'true' }}
-        run: echo Release ID ${{ steps.release.outputs.release_id }}
+      if: ${{ steps.release.outputs.released == 'true' }}
+      run: echo Release ID ${{ steps.release.outputs.release_id }}
 
 
