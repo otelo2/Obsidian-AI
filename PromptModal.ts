@@ -28,19 +28,15 @@ export class PromptModal extends Modal{
     AIresult: string | undefined;
     modalTitle: string;
     placeholder: string;
-    url: string;
-    obsidianAI: ChatGPT;
-    callback:  (url: string, prompt: string) => Promise<string | undefined>;
+    callback:  (prompt: string) => Promise<string | undefined>;
     onSubmit: (result: string) => void;
 
-    constructor(app: App, modalTitle: string, placeholder: string, url: string, callback: (url: string, prompt: string) => Promise<string | undefined>, onSubmit: (result: string) => void){
+    constructor(app: App, modalTitle: string, placeholder: string, callback: (prompt: string) => Promise<string | undefined>, onSubmit: (result: string) => void){
         super(app);
         this.modalTitle = modalTitle;
         this.placeholder = placeholder;
-        this.url = url;
         this.callback = callback;
         this.onSubmit = onSubmit;
-        this.obsidianAI = new ChatGPT();
     }
 
     onOpen(){
@@ -66,7 +62,7 @@ export class PromptModal extends Modal{
             let spinner = new Spinner(opts).spin(contentEl);
 
             // Send the prompt to GPT-3
-            this.callback(this.url, this.userInput).then(async (result) => {
+            this.callback(this.userInput).then(async (result) => {
                 this.AIresult = await result;
                 // Remove the loading message
                 contentEl.removeChild(contentEl.lastChild!);
