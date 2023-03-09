@@ -26,10 +26,7 @@ export class ChatGPT{
         })
         }
 
-    private sendToAPI = async (url:string, file: string, prompt: string) => {
-        // Set the URL
-        this.params.url = url;
-
+    private sendToAPI = async (file: string, prompt: string) => {
         // Remove newlines, tabs, and quotes from the file and prompt
         file = file.replace(/(\r\n|\n|\r|\t|")/gm, " ");
         prompt = prompt.replace(/(\r\n|\n|\r|\t|")/gm, " ");
@@ -58,31 +55,31 @@ export class ChatGPT{
             const data = await response.json;
             console.log(data);
             // Prepend a newline to the response
-            let result = `\n${data.content}`;
+            let result = `\n${data.choices[0].message.content}`;
             return result;
         } catch (error) {
             console.error(error);
         }
     }
 
-    public helpMeWrite = async (url:string, file:string) =>{
+    public helpMeWrite = async (file:string) =>{
         // Prompt for GPT
         let prompt = `You are an assistant helping a user write more content in a document based on a prompt. Output in markdown format. Do not use links. Do not include literal content from the original document.
 Use this format, replacing text in brackets with the result. Do not include the brackets in the output: 
 Output in [Identified language of the document]: 
 [Output based on the prompt, in markdown format.]`;
 
-        return await this.sendToAPI(url, file, prompt);
+        return await this.sendToAPI(file, prompt);
     }
 
-    public ask = async (url:string, file:string) =>{
+    public ask = async (file:string) =>{
         // Prompt for GPT
         let prompt = ""
 
-        return await this.sendToAPI(url, file, prompt);
+        return await this.sendToAPI(file, prompt);
     }
 
-    public brainstormIdeas = async (url:string, file:string) =>{
+    public brainstormIdeas = async (file:string) =>{
         // Prompt for GPT
         let prompt = `You are an assistant helping brainstorm a list of ideas inside a document.
         Use this format, replacing text in brackets with the result. Do not include the brackets in the output:
@@ -99,10 +96,10 @@ Output in [Identified language of the document]:
         - [Idea 9]
         - [Idea 10]`;
 
-        return await this.sendToAPI(url, file, prompt);
+        return await this.sendToAPI(file, prompt);
     }
 
-    public continueWriting = async (url:string, file:string) =>{
+    public continueWriting = async (file:string) =>{
         // Prompt for GPT
         let prompt = `You are an assistant helping a user write a document. Output how the document continues, no more than 3 sentences. Output in markdown format. Do not use links.
         Use this format, replacing text in brackets with the result. Do not include the brackets in the output:
@@ -110,10 +107,10 @@ Output in [Identified language of the document]:
         Continuation in [Identified language of the document]:
         [Continuation of the document in markdown format, no more than 3 sentences.]`;
 
-        return await this.sendToAPI(url, file, prompt);
+        return await this.sendToAPI(file, prompt);
     }
 
-    public summarize = async (url:string, file:string) =>{
+    public summarize = async (file:string) =>{
         // Prompt for GPT
         let prompt = `You are an assistant helping summarize a document. Use this format, replacing text in brackets with the result. Do not include the brackets in the output: 
 
@@ -121,20 +118,20 @@ Output in [Identified language of the document]:
         
         [One-paragaph summary of the document using the identified language.].`;
 
-        return await this.sendToAPI(url, file, prompt);
+        return await this.sendToAPI(file, prompt);
     }
 
-    public findActionItems = async (url:string, file:string) =>{
+    public findActionItems = async (file:string) =>{
         // Prompt for GPT
         let prompt = `You are an assistant helping find action items inside a document. An action item is an extracted task or to-do found inside of an unstructured document. Use this format, replacing text in brackets with the result. Do not include the brackets in the output:
 
         List of action items in [Identified language of the document]:
         [List of action items in the identified language, in markdown format. Prefix each line with "- []" to make it a checkbox.]`;
 
-        return await this.sendToAPI(url, file, prompt);
+        return await this.sendToAPI(file, prompt);
     }
 
-    public blogPost = async (url:string, file:string) =>{
+    public blogPost = async (file:string) =>{
         // Prompt for GPT
         let prompt = `You are an assistant helping to generate a blog post on a given topic. 
         Use this format, replacing text in brackets with the result. Do not include the brackets in the output:
@@ -144,10 +141,10 @@ Output in [Identified language of the document]:
         # [Topic of the blog post]
         [Blog post body]`;
 
-        return await this.sendToAPI(url, file, prompt);
+        return await this.sendToAPI(file, prompt);
     }
 
-    public prosAndConsList = async (url:string, file:string) =>{
+    public prosAndConsList = async (file:string) =>{
         // Prompt for GPT
         let prompt = `You are an assistant helping to generate a list of pros and cons about a topic. Use this format, replacing text in brackets with the result. Do not include the brackets in the output: 
 
@@ -161,10 +158,10 @@ Output in [Identified language of the document]:
         
         [List of 5 cons, one sentence each.]`;
 
-        return await this.sendToAPI(url, file, prompt);
+        return await this.sendToAPI(file, prompt);
     }
 
-    public socialMediaPost = async (url:string, file:string) =>{
+    public socialMediaPost = async (file:string) =>{
         // Prompt for GPT
         let prompt = `You are an assistant helping to draft a social media post. Use this format, replacing text in brackets with the result. Do not include the brackets in the output:
 
@@ -176,10 +173,10 @@ Output in [Identified language of the document]:
         
         Tags: [List of relevant #hashtags]`;
 
-        return await this.sendToAPI(url, file, prompt);
+        return await this.sendToAPI(file, prompt);
     }
 
-    public outline = async (url:string, file:string) =>{
+    public outline = async (file:string) =>{
         
         let prompt = `You are an assistant helping to draft an outline for a document. Use this format, replacing text in brackets with the result. Do not include the brackets in the output: 
 
@@ -188,10 +185,10 @@ Output in [Identified language of the document]:
         # [Title of document] 
         [Bulleted list outline of document, in markdown format]`
 
-        return await this.sendToAPI(url, file, prompt);
+        return await this.sendToAPI(file, prompt);
     }
 
-    public creativeStory = async (url:string, file:string) =>{
+    public creativeStory = async (file:string) =>{
         
         let prompt = `You are an assistant helping to write a creative story. Use this format, replacing text in brackets with the result. Do not include the brackets in the output: 
 
@@ -200,10 +197,10 @@ Output in [Identified language of the document]:
         # [Title of story] 
         [First 5 paragraphs of story]`
 
-        return await this.sendToAPI(url, file, prompt);
+        return await this.sendToAPI(file, prompt);
     }
 
-    public poem = async (url:string, file:string) =>{
+    public poem = async (file:string) =>{
         
         let prompt = `You are an assistant helping to write a poem. Use this format, replacing text in brackets with the result. Do not include the brackets in the output: 
 
@@ -212,10 +209,10 @@ Output in [Identified language of the document]:
         # [Title of poem] 
         [Poem, at least 4 lines]`
 
-        return await this.sendToAPI(url, file, prompt);
+        return await this.sendToAPI(file, prompt);
     }
 
-    public essay = async (url:string, file:string) =>{
+    public essay = async (file:string) =>{
         
         let prompt = `You are an assistant helping to write an essay. 
         Use this format, replacing text in brackets with the result. Do not include the brackets in the output: 
@@ -242,10 +239,10 @@ Output in [Identified language of the document]:
           
           [Conclusion paragraph]`
 
-        return await this.sendToAPI(url, file, prompt);
+        return await this.sendToAPI(file, prompt);
     }
 
-    public meetingAgenda = async (url:string, file:string) =>{
+    public meetingAgenda = async (file:string) =>{
         
         let prompt = `You are an assistant helping to write a meeting agenda. 
         Use this format, replacing text in brackets with the result. Do not include the brackets in the output: 
@@ -258,10 +255,10 @@ Output in [Identified language of the document]:
         
         [Bulleted list of at least 3 topics, in markdown format. Make sure to include details for each topic.]`
 
-        return await this.sendToAPI(url, file, prompt);
+        return await this.sendToAPI(file, prompt);
     }
 
-    public pressRelease = async (url:string, file:string) =>{
+    public pressRelease = async (file:string) =>{
         
         let prompt = `You are an assistant helping to draft a press release. Use this format, replacing text in brackets with the result. Do not include the brackets in the output: 
 
@@ -270,10 +267,10 @@ Output in [Identified language of the document]:
         # [Press release headline] 
         [Press release body, in markdown format.] `
 
-        return await this.sendToAPI(url, file, prompt);
+        return await this.sendToAPI(file, prompt);
     }
 
-    public jobDescription = async (url:string, file:string) =>{
+    public jobDescription = async (file:string) =>{
         
         let prompt = `You are an assistant helping to draft a job description. Use this format, replacing text in brackets with the result. Do not include the brackets in the output: 
 
@@ -293,10 +290,10 @@ Output in [Identified language of the document]:
         
         [Bulleted list of at least 3 key qualifications]`
 
-        return await this.sendToAPI(url, file, prompt);
+        return await this.sendToAPI(file, prompt);
     }
 
-    public salesEmail = async (url:string, file:string) =>{
+    public salesEmail = async (file:string) =>{
         
         let prompt = `You are an assistant helping to draft a personalized sales email. Use this format, replacing text in brackets with the result. Do not include the brackets in the output:
 
@@ -307,10 +304,10 @@ Output in [Identified language of the document]:
         
         [Sales email body]`
 
-        return await this.sendToAPI(url, file, prompt);
+        return await this.sendToAPI(file, prompt);
     }
 
-    public recruitingEmail = async (url:string, file:string) =>{
+    public recruitingEmail = async (file:string) =>{
         
         let prompt = `You are an assistant helping to draft a personalized recruiting email. Use this format, replacing text in brackets with the result. Do not include the brackets in the output:
   
@@ -320,6 +317,6 @@ Output in [Identified language of the document]:
           
             [Recruiting email subject] [Recruiting email body]`
 
-        return await this.sendToAPI(url, file, prompt);
+        return await this.sendToAPI(file, prompt);
     }
 }
