@@ -1,11 +1,11 @@
-import { ChatGPTUnofficialProxyAPI } from 'chatgpt';
+import { ChatGPTAPI } from 'chatgpt';
 
 export class ChatGPT {
-    private chatgpt: ChatGPTUnofficialProxyAPI;
+    private chatgpt: ChatGPTAPI;
 
-    constructor(ACCESS_TOKEN: string) {
-        this.chatgpt = new ChatGPTUnofficialProxyAPI({
-            accessToken: ACCESS_TOKEN
+    constructor(API_KEY: string) {
+        this.chatgpt = new ChatGPTAPI({
+            apiKey: API_KEY
         });
     }
 

@@ -1,6 +1,6 @@
 {
 	"name": "obsidian-ai",
-	"version": "0.0.1",
+	"version": "0.1.0",
 	"description": "Shameless copy of Notion AI.",
 	"main": "main.js",
 	"scripts": {
@@ -26,8 +26,10 @@
 		"typescript": "4.7.4"
 	},
 	"dependencies": {
+		"@dqbd/tiktoken": "^0.4.0",
 		"chatgpt": "^5.0.7",
 		"node-fetch": "^3.3.0",
-		"spin.js": "^4.1.1"
+		"spin.js": "^4.1.1",
+		"tiktoken": "^0.0.1"
 	}
 }

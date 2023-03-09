@@ -1,18 +1,30 @@
 //import fetch from 'node-fetch';
 import { requestUrl, RequestUrlParam } from "obsidian";
-import { ChatGPTUnofficialProxyAPI } from 'chatgpt';
+import { DEFAULT_SETTINGS } from "main";
 
 export class ChatGPT{
     // Test request
+    // params: RequestUrlParam = {
+    //     url: "http://localhost:8080/api/ask",
+    //     method: "POST",
+    //     headers: {
+    //         'Authorization': 'adminkey',
+    //         'Content-Type': 'application/x-www-form-urlencoded'
+    //     },
+    //     body: '{"content": "What are you?"}'
+    // }
     params: RequestUrlParam = {
-        url: "http://localhost:8080/api/ask",
+        url: "https://api.openai.com/v1/chat/completions",
         method: "POST",
         headers: {
-            'Authorization': 'adminkey',
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Authorization': `Bearer ${DEFAULT_SETTINGS.apiKey}`,
+            'Content-Type': 'application/json'
         },
-        body: '{"content": "What are you?"}'
-    }
+        body: JSON.stringify({
+            "model": "gpt-3.5-turbo",
+            "messages": [{"role": "user", "content": "What is the OpenAI mission?"}]
+        })
+        }
 
     private sendToAPI = async (url:string, file: string, prompt: string) => {
         // Set the URL
@@ -28,7 +40,11 @@ export class ChatGPT{
         }
 
         // Set the body
-        this.params.body = `{"content": "${file} ${prompt}"}`;
+        //this.params.body = `{"content": "${file} ${prompt}"}`;
+        this.params.body = JSON.stringify({
+            "model": "gpt-3.5-turbo",
+            "messages": [{"role": "user", "content": `"${file} ${prompt}"`}]
+        })
 
         console.log(this.params.body);
 

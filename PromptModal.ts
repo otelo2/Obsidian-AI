@@ -1,5 +1,5 @@
 import { App, Modal, Setting } from 'obsidian';
-import { ChatGPT } from './ChatGPT';
+//import { ChatGPT } from './ChatGPTPrompts';
 import {Spinner} from 'spin.js';
 
 var opts = {
