@@ -4,16 +4,16 @@ import {ChatGPT} from './ChatGPT';
 
 // Remember to rename these classes and interfaces!
 
-interface MyPluginSettings {
+interface ObsidianAISettings {
 	apiKey: string;
 }
 
-export const DEFAULT_SETTINGS: MyPluginSettings = {
+export const DEFAULT_SETTINGS: ObsidianAISettings = {
 	apiKey: 'sk-XXXXXXXXX'
 }
 
 export default class ObsidianAI extends Plugin {
-	settings: MyPluginSettings;
+	settings: ObsidianAISettings;
 	obsidianAI: ChatGPT;
 
 	async onload() {

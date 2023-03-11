@@ -1,6 +1,6 @@
 {
 	"name": "obsidian-ai",
-	"version": "0.1.4",
+	"version": "0.1.5",
 	"description": "Shameless copy of Notion AI.",
 	"main": "main.js",
 	"scripts": {
