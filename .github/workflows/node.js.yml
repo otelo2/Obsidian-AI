@@ -34,4 +34,4 @@ jobs:
         prerelease: false
         generateReleaseNotes: true
         makeLatest: true
-        artifacts: "main.js,manifest.json"
+        artifacts: "main.js,manifest.json,styles.css"
