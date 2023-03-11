@@ -1,6 +1,6 @@
 import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting, Vault} from 'obsidian';
 import { PromptModal } from 'PromptModal';
-import {ChatGPT} from './ChatGPTOLD';
+import {ChatGPT} from './ChatGPT';
 
 // Remember to rename these classes and interfaces!
 

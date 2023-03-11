@@ -1,39 +1,39 @@
 # Obsidian AI
 ## A shameless rip-off of [Notion AI](https://www.notion.so/product/ai)
 I made this because I got jealous of Notion's AI feature. 
+### YOU NEED TO USE YOUR OWN API KEY
 
 # FAQ
 ## How does it work?
 It uses [ChatGPT](https://chat.openai.com/chat)
 
 ## How do I use it?
-1. Install the plugin
-2. Follow the installation instructions of [ChatGPT API Server](https://github.com/ChatGPT-Hackers/ChatGPT-API-server) and [ChatGPT API Agent](https://github.com/ChatGPT-Hackers/ChatGPT-API-agent)
-3. Start the ChatGPT API Server and Agent in your localhost in port 8080 (I plan to make this configurable in the future)
-4. Create a new note
-5. Open the command palette and type `Obsidian AI: ` to see the available commands
+1. Create plugins folder in obsidian
+2. Create a folder called obsidian-ai
+3. Add main.js and manifest.json to the recently created folder
+    - Get the main.js and manifest.json from the releases tab
+4. Turn on community plugins
+5. If you don't see the plugin restart obsidian
+6. Turn on the plugin
+7. Go to the settings page of the plugin
+8. Type the API key in the field
+9. Open the command pallette (ctrl + p) and write "Obsidian AI" to see a list of the available commands
 
 ## Will Notion come after you?
 I don't think so. I'm not using their API. I'm using [ChatGPT](https://chat.openai.com/chat) which is a free API (for now). I'm just using the same name as Notion's AI feature.
 That last line was created by GitHub Copilot. In all honestly I have no clue and rest assured I'll remove this if Notion comes after me.
 
 ## Will OpenAI come after you?
-Ehhh maybe? I doubt it. I'd guess it's against their EULA to use ChatGPT as an API but who was time to read EULAs?
-
-## What will you do once ChatGPT is no longer free?
-I WON'T make this a paid plugin. I want it to be able to use different GPT-3 APIs (OpenAI, GPT-J, etc.).
-That won't happen as long as I don't want to pay for an API key (and I hate paying) so if you have a spare key and for some crazy reason liked this plugin, please contact me.
+Nope, I'm using (and paying for) their API.
 
 ## I did X and it broke/didn't work
 Yeah I didn't test this much. If you want it fixed open an issue or a PR.
 
 ## Will it work on mobile?
-I guess. You can edit the endpoint in the settings to point to your server instead of localhost and it should work well.
-But honestly I have no clue. This is my first plugin so I have no clue if mobile needs special attention.
+It really should but I'm not sure. Let me know.
 
 ## Plans for the future?
-Once ChatGPT is no longer free, I plan to add different configurations to let you use different GPT-3 APIs. 
-I want it for you to host your own endpoint or use a public one. Once that is done I might try to upload it to the community plugins repo but that assumes I don't get sued by Notion or OpenAI. Or that I don't get bored of this.
+Add more commands, improve the UI and UX because it sucks for now.
 
 ## What is implemented? What is missing?
 ### Implemented:
