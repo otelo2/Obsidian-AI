@@ -29,6 +29,7 @@
 		"@dqbd/tiktoken": "^0.4.0",
 		"chatgpt": "^5.0.7",
 		"node-fetch": "^3.3.0",
+		"openai": "^3.2.1",
 		"spin.js": "^4.1.1",
 		"tiktoken": "^0.0.1"
 	}

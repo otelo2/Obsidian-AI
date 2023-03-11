@@ -3,28 +3,85 @@ import { requestUrl, RequestUrlParam } from "obsidian";
 import { DEFAULT_SETTINGS } from "main";
 
 export class ChatGPT{
-    // Test request
+    openai: any;
+    apiKey: string;
+    constructor(apiKeyParam: string) {
+        this.apiKey = apiKeyParam;
+    }
+
+    //const [chatList: any, setChatList: any] = ([]) // ur chat history
+    public async createCompletion(params = {}) {
+        // const DEFAULT_PARAMS = {
+        //     model: "gpt-3.5-turbo",
+        //     messages: [{ role: "user", content: "Hello World" }],
+        //     // max_tokens: 4096,
+        //     temperature: 0,
+        //     // frequency_penalty: 1.0,
+        //     // stream: true,
+        // };
+        //const params_ = { ...DEFAULT_PARAMS, ...params };
+        const params_ = { ...params };
+        const result = await fetch('https://api.openai.com/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${this.apiKey}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(params_)
+        });
+        const stream = result.body
+        const output = await this.fetchStream(stream);
+        let ans:string = "";
+        //ans = ans.concat(output.choices[0].message.content);
+        //console.log("ans: "+ans);
+        console.log("normal: "+output.choices[0].message.content);
+        return output.choices[0].message.content
+    }
+
+    public async fetchStream(stream: any) {
+        const reader = stream.getReader();
+        let charsReceived = 0;
+        const li = document.createElement("li");
+    
+        // read() returns a promise that resolves
+        // when a value has been received
+        const result = await reader.read().then(
+            function processText({ done,  value }: { done: boolean, value: any }) {
+                // Result objects contain two properties:
+                // done  - true if the stream has already given you all its data.
+                // value - some data. Always undefined when done is true.
+                if (done) {
+                    console.log("Stream complete");
+                    return li.innerText;
+                }
+                // value for fetch streams is a Uint8Array
+                charsReceived += value.length;
+                const chunk = value;
+                console.log(`Received ${charsReceived} characters so far. Current chunk = ${chunk}`);
+                li.appendChild(document.createTextNode(chunk));
+                return reader.read().then(processText);
+            });
+        const list = result.split(",")
+        const numList = list.map((item: string) => {
+            return parseInt(item)
+        })
+        const text = String.fromCharCode(...numList);
+        const response = JSON.parse(text)
+        return response
+    }
+
     // params: RequestUrlParam = {
-    //     url: "http://localhost:8080/api/ask",
+    //     url: "https://api.openai.com/v1/chat/completions",
     //     method: "POST",
     //     headers: {
-    //         'Authorization': 'adminkey',
-    //         'Content-Type': 'application/x-www-form-urlencoded'
+    //         'Authorization': `Bearer ${DEFAULT_SETTINGS.apiKey}`,
+    //         'Content-Type': 'application/json'
     //     },
-    //     body: '{"content": "What are you?"}'
-    // }
-    params: RequestUrlParam = {
-        url: "https://api.openai.com/v1/chat/completions",
-        method: "POST",
-        headers: {
-            'Authorization': `Bearer ${DEFAULT_SETTINGS.apiKey}`,
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            "model": "gpt-3.5-turbo",
-            "messages": [{"role": "user", "content": "What is the OpenAI mission?"}]
-        })
-        }
+    //     body: JSON.stringify({
+    //         "model": "gpt-3.5-turbo",
+    //         "messages": [{"role": "user", "content": "What is the OpenAI mission?"}]
+    //     })
+    //     }
 
     private sendToAPI = async (file: string, prompt: string) => {
         // Remove newlines, tabs, and quotes from the file and prompt
@@ -36,27 +93,17 @@ export class ChatGPT{
             file = file + ".";
         }
 
-        // Set the body
-        //this.params.body = `{"content": "${file} ${prompt}"}`;
-        this.params.body = JSON.stringify({
-            "model": "gpt-3.5-turbo",
-            "messages": [{"role": "user", "content": `"${file} ${prompt}"`}]
-        })
-
-        console.log(this.params.body);
-
         try {
-            const response = await requestUrl(this.params);
+            return await this.createCompletion({
+                model: "gpt-3.5-turbo",
+                messages: [{"role": "user", "content": `"${file} ${prompt}"`}],
+            });
+            // const result = await this.openai.createChatCompletion({
+            //     model: "gpt-3.5-turbo",
+            //     messages: [{"role": "user", "content": `"${file} ${prompt}"`}],
+            // });
 
-            if (response.status !== 200) {
-                throw new Error("i've fallen and i can't get up");
-            }
-
-            const data = await response.json;
-            console.log(data);
-            // Prepend a newline to the response
-            let result = `\n${data.choices[0].message.content}`;
-            return result;
+             
         } catch (error) {
             console.error(error);
         }

@@ -14,6 +14,7 @@ export const DEFAULT_SETTINGS: MyPluginSettings = {
 
 export default class ObsidianAI extends Plugin {
 	settings: MyPluginSettings;
+	obsidianAI: ChatGPT;
 
 	async onload() {
 		await this.loadSettings();
@@ -39,9 +40,9 @@ export default class ObsidianAI extends Plugin {
 				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
 				if (activeView) { 
 					console.log();
-					let obsidianAPI = new ChatGPT();
+					
 					let fileContents = this.app.vault.cachedRead(activeView.file);
-					let response = obsidianAPI.ask(await fileContents);
+					let response = this.obsidianAI.ask(await fileContents);
 					console.log(editor.getSelection());
 					editor.replaceSelection(await response || "");
 				}
@@ -54,8 +55,8 @@ export default class ObsidianAI extends Plugin {
 			editorCallback: async (editor: Editor, view: MarkdownView) => {
 				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
 				if (activeView) {
-					let obsidianAPI = new ChatGPT();
-					new PromptModal(this.app, "Help Me Write", "What would you like to write about? \n For example, '5 reasons why we should hire a dedicated designer'", obsidianAPI.helpMeWrite, (result) => {
+					
+					new PromptModal(this.app, "Help Me Write", "What would you like to write about? \n For example, '5 reasons why we should hire a dedicated designer'", this.obsidianAI.helpMeWrite, (result) => {
 						editor.replaceSelection(result || "");
 					}).open();
 				}
@@ -68,10 +69,10 @@ export default class ObsidianAI extends Plugin {
 			editorCallback: async (editor: Editor, view: MarkdownView) => {
 				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
 				if (activeView) { 
-					let obsidianAPI = new ChatGPT();
+					
 					let fileContents = this.app.vault.cachedRead(activeView.file);
 					// Call the corresponding prompt
-					let response = obsidianAPI.continueWriting(await fileContents);
+					let response = this.obsidianAI.continueWriting(await fileContents);
 					console.log(editor.getSelection());
 					editor.replaceSelection(await response || "");
 				}
@@ -84,8 +85,7 @@ export default class ObsidianAI extends Plugin {
 			editorCallback: async (editor: Editor, view: MarkdownView) => {
 				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
 				if (activeView) {
-					let obsidianAPI = new ChatGPT();
-					new PromptModal(this.app, "Brainstorm Ideas", "What would you like to brainstorm about? \n For example, '10 ways to throw a birthday party'", obsidianAPI.brainstormIdeas, (result) => {
+					new PromptModal(this.app, "Brainstorm Ideas", "What would you like to brainstorm about? \n For example, '10 ways to throw a birthday party'", this.obsidianAI.brainstormIdeas, (result) => {
 						editor.replaceSelection(result || "");
 					}).open();
 				}
@@ -98,10 +98,26 @@ export default class ObsidianAI extends Plugin {
 			editorCallback: async (editor: Editor, view: MarkdownView) => {
 				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
 				if (activeView) { 
-					let obsidianAPI = new ChatGPT();
+					
 					let fileContents = this.app.vault.cachedRead(activeView.file);
 					// Call the corresponding prompt
-					let response = obsidianAPI.summarize(await fileContents);
+					let response = this.obsidianAI.summarize(await fileContents);
+					console.log(editor.getSelection());
+					editor.replaceSelection(await response);
+				}
+			}
+		});
+		// Finds action items in the current document - Promptless
+		this.addCommand({
+			id: 'find-action-items',
+			name: 'Find action items (based on existing text - propmtless))',
+			editorCallback: async (editor: Editor, view: MarkdownView) => {
+				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+				if (activeView) { 
+					
+					let fileContents = this.app.vault.cachedRead(activeView.file);
+					// Call the corresponding prompt
+					let response = this.obsidianAI.findActionItems(await fileContents);
 					console.log(editor.getSelection());
 					editor.replaceSelection(await response || "");
 				}
@@ -114,26 +130,10 @@ export default class ObsidianAI extends Plugin {
 			editorCallback: async (editor: Editor, view: MarkdownView) => {
 				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
 				if (activeView) { 
-					let obsidianAPI = new ChatGPT();
+					
 					let fileContents = this.app.vault.cachedRead(activeView.file);
 					// Call the corresponding prompt
-					let response = obsidianAPI.findActionItems(await fileContents);
-					console.log(editor.getSelection());
-					editor.replaceSelection(await response || "");
-				}
-			}
-		});
-		// Finds action items in the current document - Promptless
-		this.addCommand({
-			id: 'find-action-items',
-			name: 'Find action items (based on existing text - propmtless))',
-			editorCallback: async (editor: Editor, view: MarkdownView) => {
-				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
-				if (activeView) { 
-					let obsidianAPI = new ChatGPT();
-					let fileContents = this.app.vault.cachedRead(activeView.file);
-					// Call the corresponding prompt
-					let response = obsidianAPI.findActionItems(await fileContents);
+					let response = this.obsidianAI.findActionItems(await fileContents);
 					console.log(editor.getSelection());
 					editor.replaceSelection(await response || "");
 				}
@@ -146,8 +146,8 @@ export default class ObsidianAI extends Plugin {
 			editorCallback: async (editor: Editor, view: MarkdownView) => {
 				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
 				if (activeView) {
-					let obsidianAPI = new ChatGPT();
-					new PromptModal(this.app, "Blog Post", "What should the blog post be about? \n For example, 'the benefits of practicing mindfulness and meditation'", obsidianAPI.blogPost, (result) => {
+					
+					new PromptModal(this.app, "Blog Post", "What should the blog post be about? \n For example, 'the benefits of practicing mindfulness and meditation'", this.obsidianAI.blogPost, (result) => {
 						editor.replaceSelection(result || "");
 					}).open();
 				}
@@ -160,8 +160,8 @@ export default class ObsidianAI extends Plugin {
 			editorCallback: async (editor: Editor, view: MarkdownView) => {
 				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
 				if (activeView) {
-					let obsidianAPI = new ChatGPT();
-					new PromptModal(this.app, "Pros and Cons List", "What should the blog post be about? \n For example, 'the benefits of practicing mindfulness and meditation'", obsidianAPI.prosAndConsList, (result) => {
+					
+					new PromptModal(this.app, "Pros and Cons List", "What should the blog post be about? \n For example, 'the benefits of practicing mindfulness and meditation'", this.obsidianAI.prosAndConsList, (result) => {
 						editor.replaceSelection(result || "");
 					}).open();
 				}
@@ -174,8 +174,8 @@ export default class ObsidianAI extends Plugin {
 			editorCallback: async (editor: Editor, view: MarkdownView) => {
 				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
 				if (activeView) {
-					let obsidianAPI = new ChatGPT();
-					new PromptModal(this.app, "Social Media Post", "What should the blog post be about? \n For example, 'the benefits of practicing mindfulness and meditation'", obsidianAPI.socialMediaPost, (result) => {
+					
+					new PromptModal(this.app, "Social Media Post", "What should the blog post be about? \n For example, 'the benefits of practicing mindfulness and meditation'", this.obsidianAI.socialMediaPost, (result) => {
 						editor.replaceSelection(result || "");
 					}).open();
 				}
@@ -188,8 +188,8 @@ export default class ObsidianAI extends Plugin {
 			editorCallback: async (editor: Editor, view: MarkdownView) => {
 				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
 				if (activeView) {
-					let obsidianAPI = new ChatGPT();
-					new PromptModal(this.app, "Outline", "What do you want to make an outline for? \n For example, 'a detailed step-by-step process for getting into university'", obsidianAPI.outline, (result) => {
+					
+					new PromptModal(this.app, "Outline", "What do you want to make an outline for? \n For example, 'a detailed step-by-step process for getting into university'", this.obsidianAI.outline, (result) => {
 						editor.replaceSelection(result || "");
 					}).open();
 				}
@@ -202,9 +202,9 @@ export default class ObsidianAI extends Plugin {
 			editorCallback: async (editor: Editor, view: MarkdownView) => {
 				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
 				if (activeView) {
-					let obsidianAPI = new ChatGPT();
+					
 					// TODO: Add a placeholder text
-					new PromptModal(this.app, "Creative story", "TODO", obsidianAPI.creativeStory, (result) => {
+					new PromptModal(this.app, "Creative story", "TODO", this.obsidianAI.creativeStory, (result) => {
 						editor.replaceSelection(result || "");
 					}).open();
 				}
@@ -217,9 +217,9 @@ export default class ObsidianAI extends Plugin {
 			editorCallback: async (editor: Editor, view: MarkdownView) => {
 				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
 				if (activeView) {
-					let obsidianAPI = new ChatGPT();
+					
 					// TODO: Add a placeholder text
-					new PromptModal(this.app, "Poem", "TODO", obsidianAPI.poem, (result) => {
+					new PromptModal(this.app, "Poem", "TODO", this.obsidianAI.poem, (result) => {
 						editor.replaceSelection(result || "");
 					}).open();
 				}
@@ -232,9 +232,9 @@ export default class ObsidianAI extends Plugin {
 			editorCallback: async (editor: Editor, view: MarkdownView) => {
 				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
 				if (activeView) {
-					let obsidianAPI = new ChatGPT();
+					
 					// TODO: Add a placeholder text
-					new PromptModal(this.app, "Essay", "TODO", obsidianAPI.essay, (result) => {
+					new PromptModal(this.app, "Essay", "TODO", this.obsidianAI.essay, (result) => {
 						editor.replaceSelection(result || "");
 					}).open();
 				}
@@ -247,9 +247,9 @@ export default class ObsidianAI extends Plugin {
 			editorCallback: async (editor: Editor, view: MarkdownView) => {
 				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
 				if (activeView) {
-					let obsidianAPI = new ChatGPT();
+					
 					// TODO: Add a placeholder text
-					new PromptModal(this.app, "Meeting agenda", "TODO", obsidianAPI.meetingAgenda, (result) => {
+					new PromptModal(this.app, "Meeting agenda", "TODO", this.obsidianAI.meetingAgenda, (result) => {
 						editor.replaceSelection(result || "");
 					}).open();
 				}
@@ -262,9 +262,9 @@ export default class ObsidianAI extends Plugin {
 			editorCallback: async (editor: Editor, view: MarkdownView) => {
 				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
 				if (activeView) {
-					let obsidianAPI = new ChatGPT();
+					
 					// TODO: Add a placeholder text
-					new PromptModal(this.app, "Press release", "TODO", obsidianAPI.pressRelease, (result) => {
+					new PromptModal(this.app, "Press release", "TODO", this.obsidianAI.pressRelease, (result) => {
 						editor.replaceSelection(result || "");
 					}).open();
 				}
@@ -277,9 +277,9 @@ export default class ObsidianAI extends Plugin {
 			editorCallback: async (editor: Editor, view: MarkdownView) => {
 				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
 				if (activeView) {
-					let obsidianAPI = new ChatGPT();
+					
 					// TODO: Add a placeholder text
-					new PromptModal(this.app, "Job description", "TODO", obsidianAPI.jobDescription, (result) => {
+					new PromptModal(this.app, "Job description", "TODO", this.obsidianAI.jobDescription, (result) => {
 						editor.replaceSelection(result || "");
 					}).open();
 				}
@@ -292,9 +292,9 @@ export default class ObsidianAI extends Plugin {
 			editorCallback: async (editor: Editor, view: MarkdownView) => {
 				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
 				if (activeView) {
-					let obsidianAPI = new ChatGPT();
+					
 					// TODO: Add a placeholder text
-					new PromptModal(this.app, "Sales email", "TODO", obsidianAPI.salesEmail, (result) => {
+					new PromptModal(this.app, "Sales email", "TODO", this.obsidianAI.salesEmail, (result) => {
 						editor.replaceSelection(result || "");
 					}).open();
 				}
@@ -307,9 +307,8 @@ export default class ObsidianAI extends Plugin {
 			editorCallback: async (editor: Editor, view: MarkdownView) => {
 				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
 				if (activeView) {
-					let obsidianAPI = new ChatGPT();
 					// TODO: Add a placeholder text
-					new PromptModal(this.app, "Recruiting email", "TODO", obsidianAPI.recruitingEmail, (result) => {
+					new PromptModal(this.app, "Recruiting email", "TODO", this.obsidianAI.recruitingEmail, (result) => {
 						editor.replaceSelection(result || "");
 					}).open();
 				}
@@ -322,8 +321,8 @@ export default class ObsidianAI extends Plugin {
 			editorCallback: async (editor: Editor, view: MarkdownView) => {
 				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
 				if (activeView) {
-					let obsidianAPI = new ChatGPT();
-					new PromptModal(this.app, "Test Prompt modal", "What would you like to write about? \n For example, '5 reasons why we should hire a dedicated designer'", obsidianAPI.helpMeWrite, (result) => {
+					
+					new PromptModal(this.app, "Test Prompt modal", "What would you like to write about? \n For example, '5 reasons why we should hire a dedicated designer'", this.obsidianAI.helpMeWrite, (result) => {
 						editor.replaceSelection(result || "");
 					}).open();
 				}
@@ -349,6 +348,7 @@ export default class ObsidianAI extends Plugin {
 
 	async loadSettings() {
 		this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+		this.obsidianAI = new ChatGPT(this.settings.apiKey);
 	}
 
 	async saveSettings() {
