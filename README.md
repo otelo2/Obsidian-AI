@@ -20,7 +20,7 @@ It uses [ChatGPT](https://chat.openai.com/chat)
 9. Open the command pallette (ctrl + p) and write "Obsidian AI" to see a list of the available commands
 
 ## Will Notion come after you?
-I don't think so. I'm not using their API. I'm using [ChatGPT](https://chat.openai.com/chat) which is a free API (for now). I'm just using the same name as Notion's AI feature.
+I don't think so. I'm not using their API. I'm using [ChatGPT](https://chat.openai.com/chat) and paying for their API. I'm just using the same name as Notion's AI feature.
 That last line was created by GitHub Copilot. In all honestly I have no clue and rest assured I'll remove this if Notion comes after me.
 
 ## Will OpenAI come after you?
@@ -34,6 +34,9 @@ It really should but I'm not sure. Let me know.
 
 ## Plans for the future?
 Add more commands, improve the UI and UX because it sucks for now.
+
+## Privacy concerns
+You will be sending either the whole content of your current note or whatever you select to OpenAI chat API, be mindful of that 
 
 ## What is implemented? What is missing?
 ### Implemented:
@@ -57,6 +60,7 @@ These are the ones that I got from https://github.com/sw-yx/ai-notes/blob/main/R
 - [x] Recruiting Email
 ### Missing:
 Either because I don't have the "original" prompt or because I don't know how they work/if there are already above.
+It probably won't work the same as Notions AI feature but I can mess around and find prompts that work 
 - [ ] Improve writing
 - [ ] Fix spelling and grammar
 - [ ] Summarize
@@ -75,5 +79,3 @@ Either because I don't have the "original" prompt or because I don't know how th
 TODO: Add credits correctly because I hate not giving proper credit to people
 - https://github.com/sw-yx/ai-notes/blob/main/Resources/Notion%20AI%20Prompts.md
 - https://lspace.swyx.io/p/reverse-prompt-eng
-- https://github.com/ChatGPT-Hackers/ChatGPT-API-server
-- https://github.com/ChatGPT-Hackers/ChatGPT-API-agent
