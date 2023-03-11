@@ -9,7 +9,7 @@ interface MyPluginSettings {
 }
 
 export const DEFAULT_SETTINGS: MyPluginSettings = {
-	apiKey: 'adminkey'
+	apiKey: 'sk-XXXXXXXXX'
 }
 
 export default class ObsidianAI extends Plugin {
@@ -19,17 +19,9 @@ export default class ObsidianAI extends Plugin {
 	async onload() {
 		await this.loadSettings();
 
-		// This creates an icon in the left ribbon.
-		const ribbonIconEl = this.addRibbonIcon('dice', 'Sample Plugin', (evt: MouseEvent) => {
-			// Called when the user clicks the icon.
-			new Notice('This is a notice!');
-		});
-		// Perform additional things with the ribbon
-		ribbonIconEl.addClass('my-plugin-ribbon-class');
-
 		// This adds a status bar item to the bottom of the app. Does not work on mobile apps.
 		const statusBarItemEl = this.addStatusBarItem();
-		statusBarItemEl.setText('Status Bar Text');
+		statusBarItemEl.setText('Obsidian AI Enabled');
 
 		//TODO: Add different descriptions for each command
 		// Just sends the text of the document to the AI
@@ -314,29 +306,9 @@ export default class ObsidianAI extends Plugin {
 				}
 			}
 		});
-		// Adds a command that uses the PromptModal
-		this.addCommand({
-			id: 'test-prompt-modal',
-			name: 'Test Prompt Modal',
-			editorCallback: async (editor: Editor, view: MarkdownView) => {
-				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
-				if (activeView) {
-					
-					new PromptModal(this.app, "Test Prompt modal", "What would you like to write about? \n For example, '5 reasons why we should hire a dedicated designer'", this.obsidianAI.helpMeWrite, (result) => {
-						editor.replaceSelection(result || "");
-					}).open();
-				}
-			}
-		});
 
 		// This adds a settings tab so the user can configure various aspects of the plugin
 		this.addSettingTab(new ObsidianAISettingTab(this.app, this));
-
-		// If the plugin hooks up any global DOM events (on parts of the app that doesn't belong to this plugin)
-		// Using this function will automatically remove the event listener when this plugin is disabled.
-		this.registerDomEvent(document, 'click', (evt: MouseEvent) => {
-			console.log('click', evt);
-		});
 
 		// When registering intervals, this function will automatically clear the interval when the plugin is disabled.
 		this.registerInterval(window.setInterval(() => console.log('setInterval'), 5 * 60 * 1000));
@@ -356,22 +328,6 @@ export default class ObsidianAI extends Plugin {
 	}
 }
 
-class SampleModal extends Modal {
-	constructor(app: App) {
-		super(app);
-	}
-
-	onOpen() {
-		const {contentEl} = this;
-		contentEl.setText('Woah!');
-	}
-
-	onClose() {
-		const {contentEl} = this;
-		contentEl.empty();
-	}
-}
-
 class ObsidianAISettingTab extends PluginSettingTab {
 	plugin: ObsidianAI;
 
@@ -388,13 +344,12 @@ class ObsidianAISettingTab extends PluginSettingTab {
 		containerEl.createEl('h2', {text: 'Settings for Obsidian AI.'});
 
 		new Setting(containerEl)
-			.setName('Port')
-			.setDesc('API Key')
+			.setName('OpenAI API Key')
+			.setDesc('Get it from https://platform.openai.com/account/api-keys')
 			.addText(text => text
 				.setPlaceholder('API Key')
 				.setValue(this.plugin.settings.apiKey)
 				.onChange(async (value) => {
-					console.log('Secret: ' + value);
 					this.plugin.settings.apiKey = value;
 					await this.plugin.saveSettings();
 				}));

@@ -1,5 +1,4 @@
 import { App, Modal, Setting } from 'obsidian';
-//import { ChatGPT } from './ChatGPTPrompts';
 import {Spinner} from 'spin.js';
 
 var opts = {
@@ -46,7 +45,7 @@ export class PromptModal extends Modal{
 
         new Setting(contentEl)
             .setName('Prompt')
-            .setDesc('The prompt for GPT-3')
+            .setDesc('The prompt for Chat GPT')
             .addTextArea(text => text
                 .setPlaceholder(this.placeholder)
                 .setValue(this.userInput)
@@ -61,7 +60,7 @@ export class PromptModal extends Modal{
             // Add a loading spinner
             let spinner = new Spinner(opts).spin(contentEl);
 
-            // Send the prompt to GPT-3
+            // Send the prompt to ChatGPT
             this.callback(this.userInput).then(async (result) => {
                 this.AIresult = await result;
                 // Remove the loading message
@@ -73,7 +72,7 @@ export class PromptModal extends Modal{
                 contentEl.createEl('h2', {text: 'Result: '+this.userInput});
                 new Setting(contentEl)
                     .setName('Result')
-                    .setDesc('The result from GPT-3')
+                    .setDesc('The result from ChatGPT')
                     .addTextArea(text => text
                         .setPlaceholder('Result')
                         .setValue(this.AIresult!)

@@ -125,7 +125,7 @@ Output in [Identified language of the document]:
 
         Summary in [Identified language of the document]: 
         
-        [One-paragaph summary of the document using the identified language.].`;
+        [One-paragraph summary of the document using the identified language.].`;
 
         return await this.sendToAPI(file, prompt);
     }
@@ -295,7 +295,7 @@ Output in [Identified language of the document]:
         
         [Bulleted list of at least 3 key responsibilities] 
         
-        ## ["Qualificataions", in the identified language] 
+        ## ["Qualifications", in the identified language] 
         
         [Bulleted list of at least 3 key qualifications]`
 

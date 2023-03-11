@@ -17,7 +17,8 @@ It uses [ChatGPT](https://chat.openai.com/chat)
 6. Turn on the plugin
 7. Go to the settings page of the plugin
 8. Type the API key in the field
-9. Open the command pallette (ctrl + p) and write "Obsidian AI" to see a list of the available commands
+9. Restart your vault
+10. Open the command pallette (ctrl + p) and write "Obsidian AI" to see a list of the available commands
 
 ## Will Notion come after you?
 I don't think so. I'm not using their API. I'm using [ChatGPT](https://chat.openai.com/chat) and paying for their API. I'm just using the same name as Notion's AI feature.
