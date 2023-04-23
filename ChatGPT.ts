@@ -328,4 +328,40 @@ Output in [Identified language of the document]:
 
         return await this.sendToAPI(file, prompt);
     }
+
+    public improveWriting = async (file:string) =>{
+        let prompt = `You are an assistant helping to improve a piece of writing. Don't change the ideas, just improve the writing.`
+
+        return await this.sendToAPI(file, prompt);
+    }
+
+    public fixSpellingAndGrammar = async (file:string) =>{
+        let prompt = `You are an assistant helping to fix spelling and grammar in a piece of writing. Don't change the ideas, just fix the spelling and grammar.`
+
+        return await this.sendToAPI(file, prompt);
+    }
+
+    public explainThis = async (file:string) =>{
+        let prompt = `You will be given a text. Explain the text in a clear and easy to understand way. Don't make it too basic or too advanced.`
+
+        return await this.sendToAPI(file, prompt);
+    }
+
+    public makeLonger = async (file:string) =>{
+        let prompt = `You will be given a text. Make it longer. Don't change the ideas, just make it longer.`
+
+        return await this.sendToAPI(file, prompt);
+    }
+
+    public makeShorter = async (file:string) =>{
+        let prompt = `You will be given a text. Make it shorter. Don't change the ideas, just make it shorter.`
+
+        return await this.sendToAPI(file, prompt);
+    }
+
+    public useSimplerLanguage = async (file:string) =>{
+        let prompt = `You will be given a text. Rewrite the text to use simpler language. Don't change the ideas, just use simpler language.`
+
+        return await this.sendToAPI(file, prompt);
+    }
 }

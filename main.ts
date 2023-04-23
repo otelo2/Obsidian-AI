@@ -195,8 +195,7 @@ export default class ObsidianAI extends Plugin {
 				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
 				if (activeView) {
 					
-					// TODO: Add a placeholder text
-					new PromptModal(this.app, "Creative story", "TODO", this.obsidianAI.creativeStory, (result) => {
+					new PromptModal(this.app, "Creative story", "What kind of story would you like to create? \n For example, 'A sci-fi adventure about a team of astronauts exploring a new planet'", this.obsidianAI.creativeStory, (result) => {
 						editor.replaceSelection(result || "");
 					}).open();
 				}
@@ -210,8 +209,7 @@ export default class ObsidianAI extends Plugin {
 				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
 				if (activeView) {
 					
-					// TODO: Add a placeholder text
-					new PromptModal(this.app, "Poem", "TODO", this.obsidianAI.poem, (result) => {
+					new PromptModal(this.app, "Poem", "What type of poem would you like to write? \n For example, a sonnet, haiku, free verse, or limerick. Consider what subject or theme you want to explore in your poem and what emotions or images you want to convey to your reader.", this.obsidianAI.poem, (result) => {
 						editor.replaceSelection(result || "");
 					}).open();
 				}
@@ -225,8 +223,7 @@ export default class ObsidianAI extends Plugin {
 				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
 				if (activeView) {
 					
-					// TODO: Add a placeholder text
-					new PromptModal(this.app, "Essay", "TODO", this.obsidianAI.essay, (result) => {
+					new PromptModal(this.app, "Essay", "What would you like to write your essay about? \n For example, 'The impact of social media on mental health'", this.obsidianAI.essay, (result) => {
 						editor.replaceSelection(result || "");
 					}).open();
 				}
@@ -240,8 +237,7 @@ export default class ObsidianAI extends Plugin {
 				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
 				if (activeView) {
 					
-					// TODO: Add a placeholder text
-					new PromptModal(this.app, "Meeting agenda", "TODO", this.obsidianAI.meetingAgenda, (result) => {
+					new PromptModal(this.app, "Meeting agenda", "What would you like to include in the meeting agenda? \n For example, 'Project update, review of goals, and team building exercise'.", this.obsidianAI.meetingAgenda, (result) => {
 						editor.replaceSelection(result || "");
 					}).open();
 				}
@@ -255,8 +251,7 @@ export default class ObsidianAI extends Plugin {
 				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
 				if (activeView) {
 					
-					// TODO: Add a placeholder text
-					new PromptModal(this.app, "Press release", "TODO", this.obsidianAI.pressRelease, (result) => {
+					new PromptModal(this.app, "Press release", "What would you like to create a press release about? \n For example, 'new product launch'", this.obsidianAI.pressRelease, (result) => {
 						editor.replaceSelection(result || "");
 					}).open();
 				}
@@ -270,8 +265,7 @@ export default class ObsidianAI extends Plugin {
 				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
 				if (activeView) {
 					
-					// TODO: Add a placeholder text
-					new PromptModal(this.app, "Job description", "TODO", this.obsidianAI.jobDescription, (result) => {
+					new PromptModal(this.app, "Job description", "What type of job description do you want to create? \n For example, 'Marketing Manager for a tech startup'", this.obsidianAI.jobDescription, (result) => {
 						editor.replaceSelection(result || "");
 					}).open();
 				}
@@ -285,8 +279,7 @@ export default class ObsidianAI extends Plugin {
 				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
 				if (activeView) {
 					
-					// TODO: Add a placeholder text
-					new PromptModal(this.app, "Sales email", "TODO", this.obsidianAI.salesEmail, (result) => {
+					new PromptModal(this.app, "Sales email", "What would you like to write in your sales email? \n For example, 'An introduction to your product or service and how it can solve the recipient's problem'", this.obsidianAI.salesEmail, (result) => {
 						editor.replaceSelection(result || "");
 					}).open();
 				}
@@ -299,8 +292,101 @@ export default class ObsidianAI extends Plugin {
 			editorCallback: async (editor: Editor, view: MarkdownView) => {
 				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
 				if (activeView) {
-					// TODO: Add a placeholder text
-					new PromptModal(this.app, "Recruiting email", "TODO", this.obsidianAI.recruitingEmail, (result) => {
+
+					new PromptModal(this.app, "Recruiting email", "What position are you recruiting for? \n For example, 'Marketing Manager position at ABC Inc.'", this.obsidianAI.recruitingEmail, (result) => {
+						editor.replaceSelection(result || "");
+					}).open();
+				}
+			}
+		});
+		// Improve a given piece of writing
+		this.addCommand({
+			id: 'improve-writing',
+			name: 'Improve writing (Improve a given piece of writing - promptless)',
+			editorCallback: async (editor: Editor, view: MarkdownView) => {
+				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+				if (activeView) { 
+					
+					let fileContents = this.app.vault.cachedRead(activeView.file);
+					// Call the corresponding prompt
+					let response = this.obsidianAI.improveWriting(await fileContents);
+					console.log(editor.getSelection());
+					editor.replaceSelection(await response || "");
+				}
+			}
+		});
+		// Fix spelling and grammar for a given piece of writing
+		this.addCommand({
+			id: 'fix-speaking-grammar',
+			name: 'Fix speaking and grammar (Fix spelling and grammar for a given piece of writing - promptless)',
+			editorCallback: async (editor: Editor, view: MarkdownView) => {
+				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+				if (activeView) { 
+					
+					let fileContents = this.app.vault.cachedRead(activeView.file);
+					// Call the corresponding prompt
+					let response = this.obsidianAI.fixSpellingAndGrammar(await fileContents);
+					console.log(editor.getSelection());
+					editor.replaceSelection(await response || "");
+				}
+			}
+		});
+		// Explain a given piece of text
+		this.addCommand({
+			id: 'explain-this',
+			name: 'Explain this text (Explain the given piece of text - promptless)',
+			editorCallback: async (editor: Editor, view: MarkdownView) => {
+				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+				if (activeView) { 
+					
+					let fileContents = this.app.vault.cachedRead(activeView.file);
+					// Call the corresponding prompt
+					let response = this.obsidianAI.explainThis(await fileContents);
+					console.log(editor.getSelection());
+					editor.replaceSelection(await response || "");
+				}
+			}
+		});
+		// Make the given text longer
+		this.addCommand({
+			id: 'make-longer',
+			name: 'Make longer (Make the given text longer - promptless)',
+			editorCallback: async (editor: Editor, view: MarkdownView) => {
+				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+				if (activeView) { 
+					
+					let fileContents = this.app.vault.cachedRead(activeView.file);
+					// Call the corresponding prompt
+					let response = this.obsidianAI.makeLonger(await fileContents);
+					console.log(editor.getSelection());
+					editor.replaceSelection(await response || "");
+				}
+			}
+		});
+		// Make the given text shorter
+		this.addCommand({
+			id: 'make-shorter',
+			name: 'Make shorter (Make the given text shorter - promptless)',
+			editorCallback: async (editor: Editor, view: MarkdownView) => {
+				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+				if (activeView) { 
+					
+					let fileContents = this.app.vault.cachedRead(activeView.file);
+					// Call the corresponding prompt
+					let response = this.obsidianAI.makeShorter(await fileContents);
+					console.log(editor.getSelection());
+					editor.replaceSelection(await response || "");
+				}
+			}
+		});
+		// Rewrite the given text using simpler language
+		this.addCommand({
+			id: 'use-simpler-language',
+			name: 'Use simpler language (Rewrite the given text using simpler language - promptless)',
+			editorCallback: async (editor: Editor, view: MarkdownView) => {
+				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
+				if (activeView) {
+					new PromptModal(this.app, "Make longer", "TODO", this.obsidianAI.useSimplerLanguage, (result) => {
 						editor.replaceSelection(result || "");
 					}).open();
 				}

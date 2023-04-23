@@ -3,11 +3,19 @@
 I made this because I got jealous of Notion's AI feature. 
 ### YOU NEED TO USE YOUR OWN API KEY
 
+# Usage
+There are two types of commands: promptless and prompted.
+## Prompted 
+Prompted commands don't require you to select any text, as you give the text you want in a new window that opens when you run the command. 
+
+## Promptless 
+Promptless commands require you to select text: You select the text you want, run the promptless command, and the plugin will use the selected text as the prompt.
+
 # FAQ
 ## How does it work?
 It uses [ChatGPT](https://chat.openai.com/chat)
 
-## How do I use it?
+## How do install it?
 1. Create plugins folder in obsidian
 2. Create a folder called obsidian-ai
 3. Add main.js and manifest.json to the recently created folder
@@ -59,21 +67,18 @@ These are the ones that I got from https://github.com/sw-yx/ai-notes/blob/main/R
 - [x] Job Description
 - [x] Sales Email
 - [x] Recruiting Email
+- [x] Improve writing
+- [x] Fix spelling and grammar
+- [x] Explain this
+- [x] Make longer
+- [x] Make shorter
+- [x] Use simpler language
 ### Missing:
 Either because I don't have the "original" prompt or because I don't know how they work/if there are already above.
 It probably won't work the same as Notions AI feature but I can mess around and find prompts that work 
-- [ ] Improve writing
-- [ ] Fix spelling and grammar
-- [ ] Summarize
 - [ ] Translate
-- [ ] Explain this
-- [ ] Make longer
-- [ ] Make shorter
-- [ ] Find action items
-- [ ] Use simpler language
 - [ ] Help me edit
 - [ ] Help me write
-- [ ] Continue writing
 
 
 # Credits
