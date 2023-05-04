@@ -306,8 +306,7 @@ export default class ObsidianAI extends Plugin {
 			editorCallback: async (editor: Editor, view: MarkdownView) => {
 				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
 				if (activeView) { 
-					
-					let fileContents = this.app.vault.cachedRead(activeView.file);
+					let fileContents = view.editor.getSelection();
 					// Call the corresponding prompt
 					let response = this.obsidianAI.improveWriting(await fileContents);
 					console.log(editor.getSelection());
@@ -322,8 +321,7 @@ export default class ObsidianAI extends Plugin {
 			editorCallback: async (editor: Editor, view: MarkdownView) => {
 				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
 				if (activeView) { 
-					
-					let fileContents = this.app.vault.cachedRead(activeView.file);
+					let fileContents = view.editor.getSelection();
 					// Call the corresponding prompt
 					let response = this.obsidianAI.fixSpellingAndGrammar(await fileContents);
 					console.log(editor.getSelection());
@@ -338,8 +336,7 @@ export default class ObsidianAI extends Plugin {
 			editorCallback: async (editor: Editor, view: MarkdownView) => {
 				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
 				if (activeView) { 
-					
-					let fileContents = this.app.vault.cachedRead(activeView.file);
+					let fileContents = view.editor.getSelection();
 					// Call the corresponding prompt
 					let response = this.obsidianAI.explainThis(await fileContents);
 					console.log(editor.getSelection());
@@ -354,8 +351,7 @@ export default class ObsidianAI extends Plugin {
 			editorCallback: async (editor: Editor, view: MarkdownView) => {
 				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
 				if (activeView) { 
-					
-					let fileContents = this.app.vault.cachedRead(activeView.file);
+					let fileContents = view.editor.getSelection();
 					// Call the corresponding prompt
 					let response = this.obsidianAI.makeLonger(await fileContents);
 					console.log(editor.getSelection());
@@ -370,8 +366,7 @@ export default class ObsidianAI extends Plugin {
 			editorCallback: async (editor: Editor, view: MarkdownView) => {
 				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
 				if (activeView) { 
-					
-					let fileContents = this.app.vault.cachedRead(activeView.file);
+					let fileContents = view.editor.getSelection();
 					// Call the corresponding prompt
 					let response = this.obsidianAI.makeShorter(await fileContents);
 					console.log(editor.getSelection());
@@ -386,9 +381,11 @@ export default class ObsidianAI extends Plugin {
 			editorCallback: async (editor: Editor, view: MarkdownView) => {
 				let activeView = this.app.workspace.getActiveViewOfType(MarkdownView);
 				if (activeView) {
-					new PromptModal(this.app, "Make longer", "TODO", this.obsidianAI.useSimplerLanguage, (result) => {
-						editor.replaceSelection(result || "");
-					}).open();
+					let fileContents = view.editor.getSelection();
+					// Call the corresponding prompt
+					let response = this.obsidianAI.useSimplerLanguage(await fileContents);
+					console.log(editor.getSelection());
+					editor.replaceSelection(await response || "");
 				}
 			}
 		});
