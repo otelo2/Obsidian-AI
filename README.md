@@ -83,6 +83,11 @@ It probably won't work the same as Notions AI feature but I can mess around and 
 
 
 # Credits
-TODO: Add credits correctly because I hate not giving proper credit to people
-- https://github.com/sw-yx/ai-notes/blob/main/Resources/Notion%20AI%20Prompts.md
-- https://lspace.swyx.io/p/reverse-prompt-eng
+- Link: https://github.com/sw-yx/ai-notes/blob/main/Resources/Notion%20AI%20Prompts.md
+    - Creator: sw-yx
+    - Repository: ai-notes
+    - Platform: GitHub
+
+- Link: https://lspace.swyx.io/p/reverse-prompt-eng
+    - Creator: sw-yx
+    - Platform: personal website
