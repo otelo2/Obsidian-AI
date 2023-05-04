@@ -1,7 +1,7 @@
 {
 	"id": "copy-ai",
 	"name": "Obsidian AI",
-	"version": "0.1.6",
+	"version": "0.1.7",
 	"minAppVersion": "0.15.0",
 	"description": "Shameless copy of Notion AI.",
 	"author": "Otelo2",
