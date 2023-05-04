@@ -19,8 +19,8 @@ export class ChatGPT{
             },
             body: JSON.stringify(params_)
         });
-        const stream = result.body
-        const output = await this.fetchStream(stream);
+
+        const output = await result.json(); 
         console.log("normal: "+output.choices[0].message.content);
         return output.choices[0].message.content
     }
