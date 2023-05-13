@@ -19,7 +19,7 @@ It uses [ChatGPT](https://chat.openai.com/chat)
 1. Create plugins folder in obsidian
 2. Create a folder called obsidian-ai in the .obsidian directory of your vault 
 3. Add main.js, manifest.json, and styles.css to the recently created folder
-    - Get the main.js, manifest.json and styles.css from the releases tab
+    - Get the main.js, manifest.json and styles.css from the [Releases tab](https://github.com/otelo2/Obsidian-AI/releases)
     - Your route should look like: {your_vault}/.obsidian/plugins/obsidian-ai/{the three files here}
 4. Turn on community plugins
 5. If you don't see the plugin restart obsidian
